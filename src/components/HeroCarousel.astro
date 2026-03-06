@@ -1,0 +1,186 @@
+---
+import styles from "./HeroCarousel.module.css";
+import { Image } from "astro:assets";
+
+import CesarDeLeon1 from "../assets/images/CesarDeLeon1.png";
+import CesarDeLeon2 from "../assets/images/CesarDeLeon2.png";
+import CesarDeLeon3 from "../assets/images/CesarDeLeon3.png";
+import RondoArt from "../assets/images/RondoArt.png";
+
+const slides = [
+  {
+    img: CesarDeLeon1,
+    alt: "César de León - slide 1",
+    title: ["Cesar", "de León"],
+    subtitle: ["Esculturas organicas bajo pedido", "ideales para cualquier espacio"],
+  },
+  {
+    img: CesarDeLeon2,
+    alt: "César de León - slide 2",
+    title: ["Cesar", "de León"],
+    subtitle: ["Esculturas organicas bajo pedido", "ideales para cualquier espacio"],
+  },
+  {
+    img: CesarDeLeon3,
+    alt: "César de León - slide 3",
+    title: ["Cesar", "de León"],
+    subtitle: ["Esculturas organicas bajo pedido", "ideales para cualquier espacio"],
+  },
+  {
+    img: RondoArt,
+    alt: "Rondó - Art Collection",
+    title: ["Rondo"],
+    subtitle: ["Art Collection"],
+    kicker: ["Descubre la coleccion Rondo, piezas", "listas para tu hogar"],
+    variant: "rondo",
+  },
+];
+---
+
+<section class={styles.hero} aria-label="Hero">
+  <div class={styles.carousel} data-carousel>
+    <div class={styles.track} data-track>
+      {slides.map((s, i) => (
+        <figure class={styles.slide} data-slide={i}>
+          <Image
+            class={styles.slideImg}
+            src={s.img}
+            alt={s.alt}
+            loading={i === 0 ? "eager" : "lazy"}
+            decoding="async"
+            format="webp"
+            quality={92}
+          />
+        </figure>
+      ))}
+    </div>
+
+    <div class={styles.vignette} aria-hidden="true"></div>
+
+    <div class={styles.contentWrap}>
+      {slides.map((s, i) => (
+        <div
+          class={`${styles.content} ${s.variant === "rondo" ? styles.contentRondo : ""}`}
+          data-content={i}
+          aria-hidden={i === 0 ? "false" : "true"}
+        >
+          <h1 class={styles.title}>
+            {s.title.map((line) => (
+              <>
+                {line}
+                <br />
+              </>
+            ))}
+          </h1>
+
+          <p class={styles.subtitle}>
+            {s.subtitle.map((line) => (
+              <>
+                {line}
+                <br />
+              </>
+            ))}
+          </p>
+
+          {s.kicker && (
+            <p class={styles.kicker}>
+              {s.kicker.map((line) => (
+                <>
+                  {line}
+                  <br />
+                </>
+              ))}
+            </p>
+          )}
+        </div>
+      ))}
+    </div>
+
+    <div class={styles.dots} data-dots aria-label="Carousel pagination">
+      {slides.map((_, i) => (
+        <button
+          class={styles.dot}
+          type="button"
+          aria-label={`Ir a slide ${i + 1}`}
+          data-dot
+          data-index={i}
+        />
+      ))}
+    </div>
+  </div>
+
+  <script is:inline>
+    (() => {
+      const root = document.querySelector("[data-carousel]");
+      if (!root) return;
+
+      const track = root.querySelector("[data-track]");
+      const dots = Array.from(root.querySelectorAll("[data-dot]"));
+      const contents = Array.from(root.querySelectorAll("[data-content]"));
+      if (!track || dots.length === 0) return;
+
+      const slideCount = dots.length;
+      let index = 0;
+      let timer = null;
+
+      const getSlideWidth = () => {
+        const first = track.querySelector("[data-slide='0']");
+        return first ? first.getBoundingClientRect().width : track.clientWidth;
+      };
+
+      const setActive = (i, { smooth = true } = {}) => {
+        index = (i + slideCount) % slideCount;
+
+        const w = getSlideWidth() || 1;
+        track.scrollTo({ left: w * index, behavior: smooth ? "smooth" : "auto" });
+
+        dots.forEach((d, di) => d.setAttribute("aria-current", di === index ? "true" : "false"));
+
+        contents.forEach((c, ci) => {
+          const active = ci === index;
+          c.setAttribute("aria-hidden", active ? "false" : "true");
+          c.style.opacity = active ? "1" : "0";
+          c.style.pointerEvents = active ? "auto" : "none";
+          c.style.transform = active ? "translateY(0px)" : "translateY(6px)";
+        });
+      };
+
+      const stop = () => {
+        if (timer) clearInterval(timer);
+        timer = null;
+      };
+
+      const start = () => {
+        stop();
+        timer = setInterval(() => setActive(index + 1), 4500);
+      };
+
+      setActive(0, { smooth: false });
+      start();
+
+      dots.forEach((d) => {
+        d.addEventListener("click", () => {
+          setActive(Number(d.dataset.index || 0));
+          start();
+        });
+      });
+
+      root.addEventListener("mouseenter", stop);
+      root.addEventListener("mouseleave", start);
+      root.addEventListener("focusin", stop);
+      root.addEventListener("focusout", start);
+
+      let raf = null;
+      track.addEventListener("scroll", () => {
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
+          const w = getSlideWidth() || 1;
+          const newIndex = Math.round(track.scrollLeft / w);
+          if (newIndex !== index) setActive(newIndex, { smooth: false });
+        });
+      });
+
+      window.addEventListener("resize", () => setActive(index, { smooth: false }));
+    })();
+  </script>
+</section>

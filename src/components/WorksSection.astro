@@ -1,0 +1,41 @@
+---
+import styles from "./WorksSection.module.css";
+import { Image } from "astro:assets";
+import type { CollectionId } from "../data/works";
+import { worksByCollection } from "../data/works";
+
+type Props = { collectionId: CollectionId };
+const { collectionId } = Astro.props;
+const data = worksByCollection[collectionId];
+---
+
+<section class={styles.section} aria-label="Trabajos">
+  <div class={styles.inner}>
+    <header class={styles.header}>
+      <div>
+        <p class={styles.eyebrow}>{data.heading}</p>
+        <p class={styles.sub}>{data.subheading}</p>
+      </div>
+
+      <div class={styles.switch} aria-label="Selector de colección">
+        <a class={`${styles.pill} ${collectionId === "pedido" ? styles.pillActive : ""}`} href="/trabajos/pedido">
+          Bajo pedido
+        </a>
+        <a class={`${styles.pill} ${collectionId === "venta" ? styles.pillActive : ""}`} href="/trabajos/venta">
+          En venta
+        </a>
+      </div>
+    </header>
+
+    <div class={styles.grid}>
+      {data.items.map((item) => (
+        <a class={styles.card} href={`/trabajos/${collectionId}/${item.slug}`} aria-label={item.title}>
+          <div class={styles.frame}>
+            <Image class={styles.img} src={item.image} alt={item.title} loading="lazy" decoding="async" />
+          </div>
+          <div class={styles.caption}>{item.title}</div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

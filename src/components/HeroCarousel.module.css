@@ -1,0 +1,241 @@
+.hero {
+    position: relative;
+    width: 100%;
+    min-height: 90vh;
+    overflow: hidden;
+    background: #0b0b0b;
+}
+
+/* ---------------- Navbar ---------------- */
+.navWrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 30;
+    padding: 22px 42px;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.brandImg {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 22px rgba(0, 0, 0, 0.45));
+}
+
+.navLinks {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 70px;
+    margin: 0;
+    padding: 0;
+}
+
+.navLink {
+    font-family: "Tofino Text", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 100%;
+    color: rgba(255, 255, 255, 0.92);
+    text-decoration: none;
+    text-shadow: 0 8px 26px rgba(0, 0, 0, 0.35);
+    transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.navLink:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+}
+
+/* ---------------- Carousel ---------------- */
+.carousel {
+    position: relative;
+    width: 100%;
+    height: 90vh;
+    min-height: 720px;
+}
+
+.track {
+    height: 100%;
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+}
+
+.track::-webkit-scrollbar {
+    display: none;
+}
+
+.slide {
+    position: relative;
+    flex: 0 0 100%;
+    height: 100%;
+    margin: 0;
+    scroll-snap-align: start;
+}
+
+.slideImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.02);
+}
+
+/* overlay */
+.vignette {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
+    background:
+        linear-gradient(90deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.12) 45%, rgba(0, 0, 0, 0.25) 100%),
+        radial-gradient(1200px 700px at 22% 65%, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 60%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.06) 40%, rgba(0, 0, 0, 0.45) 100%);
+}
+
+/* ---------------- Slide content (por slide) ---------------- */
+.contentWrap {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    pointer-events: none;
+    /* solo el active se habilita en JS */
+}
+
+.content {
+    position: absolute;
+    left: 58px;
+    bottom: 110px;
+    max-width: 560px;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 220ms ease, transform 220ms ease;
+    pointer-events: none;
+}
+
+.title {
+    margin: 0 0 18px 0;
+    color: rgba(255, 255, 255, 0.93);
+    font-family: "Tofino Script", "Tofino", "Brush Script MT", "Segoe Script", cursive;
+    font-weight: 700;
+    font-size: clamp(54px, 6vw, 92px);
+    line-height: 92%;
+    text-shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
+}
+
+/* Subtitle font spec (Tofino Semibold 24px) */
+.subtitle {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.86);
+    font-family: "Tofino", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+}
+
+/* Rondo extra text */
+.kicker {
+    margin: 22px 0 0 0;
+    color: rgba(255, 255, 255, 0.78);
+    font-family: "Tofino Text", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 125%;
+    text-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+}
+
+/* Ajuste de layout para el slide Rondo (se parece más a tu captura) */
+.contentRondo {
+    left: 44px;
+    bottom: 118px;
+    max-width: 620px;
+}
+
+.contentRondo .title {
+    font-size: clamp(64px, 7vw, 104px);
+}
+
+/* ---------------- Dots ---------------- */
+.dots {
+    position: absolute;
+    left: 50%;
+    bottom: 34px;
+    transform: translateX(-50%);
+    z-index: 25;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    border: none;
+    background: rgba(255, 255, 255, 0.35);
+    cursor: pointer;
+    transition: transform 180ms ease, background 180ms ease;
+}
+
+.dot[aria-current="true"] {
+    background: rgba(255, 255, 255, 0.75);
+    transform: scale(1.15);
+}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 960px) {
+    .navWrap {
+        padding: 18px 18px;
+    }
+
+    .navLinks {
+        gap: 22px;
+    }
+
+    .content {
+        left: 22px;
+        bottom: 92px;
+        max-width: 90%;
+    }
+
+    .carousel {
+        min-height: 640px;
+    }
+}
+
+@media (max-width: 720px) {
+    .navLinks {
+        display: none;
+    }
+
+    .brandImg {
+        width: 38px;
+        height: 38px;
+    }
+
+    .subtitle {
+        font-size: 20px;
+    }
+
+    .kicker {
+        font-size: 16px;
+    }
+}

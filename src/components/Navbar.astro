@@ -1,0 +1,25 @@
+---
+import styles from "./Navbar.module.css";
+import MenuLogoUrl from "../assets/logos/Menu.svg?url";
+
+const links = [
+  { href: "#coleccion-cesar", label: "Colección César" },
+  { href: "#sobre-mi", label: "Sobre mí" },
+  { href: "#coleccion-rondo", label: "Colección Rondó" },
+  { href: "#contacto", label: "Contacto" },
+];
+---
+
+<header class={styles.navWrap}>
+  <nav class={styles.nav} aria-label="Navegación principal">
+    <a class={styles.brand} href="/" aria-label="Inicio">
+      <img class={styles.brandImg} src={MenuLogoUrl} alt="Logo" />
+    </a>
+
+    <ul class={styles.navLinks}>
+      {links.map((l) => (
+        <li><a class={styles.navLink} href={l.href}>{l.label}</a></li>
+      ))}
+    </ul>
+  </nav>
+</header>
