@@ -1,16 +1,16 @@
 ---
-import styles from "./HeroRondo.module.css";
+import styles from "./CollectionCesarHero.module.css";
 import { Image } from "astro:assets";
 
-import RondoHero from "../assets/images/RondoHero.webp";
-import RondoLogo from "../assets/images/RondoArt.webp";
+import CesarHeroBg from "../assets/images/CesarDeLeon1.webp";
+import CesarLogo from "../assets/images/CesarLogo.webp";
 ---
 
-<section class={styles.hero} aria-label="Hero Rondó">
+<section class={styles.hero} aria-label="Hero Colección César">
     <div class={styles.media}>
         <Image
-            src={RondoHero}
-            alt="Rondó Art Collection"
+            src={CesarHeroBg}
+            alt="Colección César"
             class={styles.img}
             loading="eager"
             decoding="async"
@@ -21,18 +21,18 @@ import RondoLogo from "../assets/images/RondoArt.webp";
     <div class={styles.overlayContent}>
         <div class={styles.logoWrap}>
             <Image
-                src={RondoLogo}
-                alt="Rondó"
+                src={CesarLogo}
+                alt="César"
                 class={styles.logoImg}
                 loading="eager"
                 decoding="async"
             />
         </div>
 
-        <p class={styles.desc}>
-            Descubre la colección Rondó, piezas
+        <p class={styles.subtitle}>
+            Descubre la colección César, piezas
             <br />
-            listas para tu hogar
+            disponibles para tu espacio
         </p>
     </div>
 </section>

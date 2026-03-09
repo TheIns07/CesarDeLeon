@@ -25,7 +25,7 @@
     margin: 0;
     color: rgba(255, 255, 255, 0.85);
     letter-spacing: 0.26em;
-    font-size: 12px;
+    font-size: 24px;
     font-family: "Tofino Text", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     font-weight: 400;
 }
@@ -33,7 +33,7 @@
 .sub {
     margin: 8px 0 0;
     color: rgba(255, 255, 255, 0.6);
-    font-size: 12px;
+    font-size: 16px;
     font-family: "Tofino Text", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     font-weight: 400;
 }
@@ -182,10 +182,10 @@
 }
 
 .caption {
-    margin-top: 14px;
+    margin-top: 29px;
     text-align: center;
     color: rgba(255, 255, 255, 0.72);
-    font-size: 12px;
+    font-size: 17px;
     font-family: "Tofino Text", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     font-weight: 400;
 }
@@ -198,15 +198,16 @@
 
 .contactRow {
     display: grid;
-    grid-template-columns: minmax(520px, 1fr) 360px;
-    gap: 42px;
-    align-items: center;
+    grid-template-columns: minmax(560px, 1fr) 320px;
+    gap: 48px;
+    align-items: start;
 }
 
 .circles {
     width: 100%;
     display: flex;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
 .circlesImg {
@@ -218,8 +219,11 @@
 }
 
 .contactBox {
-    padding-top: 0;
-    align-self: center;
+    width: 100%;
+    max-width: 320px;
+    padding-top: 6px;
+    align-self: start;
+    justify-self: start;
 }
 
 .contactTitle {
@@ -241,7 +245,7 @@
 
 .contactItem {
     display: grid;
-    grid-template-columns: 34px 1fr;
+    grid-template-columns: 44px 1fr;
     align-items: center;
     gap: 14px;
     color: rgba(255, 255, 255, 0.78);
@@ -278,7 +282,7 @@
     text-align: center;
     color: rgba(255, 255, 255, 0.78);
     letter-spacing: 0.22em;
-    font-size: 14px;
+    font-size: 24px;
     font-family: "Tofino Text", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     font-weight: 400;
 }
@@ -302,7 +306,7 @@
 
 .labelText {
     color: rgba(255, 255, 255, 0.68);
-    font-size: 12px;
+    font-size: 17px;
     font-family: "Tofino Text", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
 
@@ -355,7 +359,7 @@
 
 .formStatus {
     color: rgba(255, 255, 255, 0.75);
-    font-size: 12px;
+    font-size: 24px;
     font-family: "Tofino Text", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
 
@@ -391,7 +395,7 @@
 .footerSub {
     margin: 18px 0 0;
     color: rgba(67, 40, 28, 0.78);
-    font-size: 16px;
+    font-size: 24px;
     font-family: "Tofino Regular", "Tofino Text", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     font-weight: 400;
     line-height: 1.45;
@@ -417,14 +421,14 @@
     color: #f2e9dc;
     text-decoration: none;
     font-family: "Tofino Regular", "Tofino Text", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    font-size: 15px;
+    font-size: 24px;
     font-weight: 400;
 }
 
 .terms {
     color: rgba(67, 40, 28, 0.78);
     text-decoration: none;
-    font-size: 14px;
+    font-size: 24px;
     font-family: "Tofino Regular", "Tofino Text", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     font-weight: 400;
 }
@@ -460,6 +464,8 @@
 
     .contactBox {
         max-width: 420px;
+        justify-self: center;
+        text-align: left;
     }
 
     .formRow {
@@ -508,6 +514,14 @@
 
     .slide {
         inset: 14px;
+    }
+
+    .contactSection {
+        margin-top: 64px;
+    }
+
+    .contactBox {
+        max-width: 100%;
     }
 
     .footerBeige {

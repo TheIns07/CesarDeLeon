@@ -99,14 +99,14 @@ const firstImage = safeImages[0];
 
                             <dl class={styles.specsList}>
                                 {specs.map((s) => (
-                                    <>
+                                    <Fragment>
                                         <dt class={styles.specKey}>
                                             {s.label}:
                                         </dt>
                                         <dd class={styles.specVal}>
                                             {s.value}
                                         </dd>
-                                    </>
+                                    </Fragment>
                                 ))}
                             </dl>
                         </div>

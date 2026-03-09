@@ -1,11 +1,11 @@
 import type { ImageMetadata } from "astro";
 
-// Bajo pedido
+// Placeholders actuales de César
 import pecesCover from "../assets/images/works/1Peces/PECES1.webp";
 import coincidirCover from "../assets/images/works/2ParejaAbraza/COINCIDIR1.webp";
 import venadoCover from "../assets/images/works/3Venado/VENADO1.webp";
 
-// En venta
+// Rondó / en venta
 import almaFuerteCover from "../assets/images/works/4PersonaPunto/ALMAF1.webp";
 import reflexionCover from "../assets/images/works/5Chiquita/REFLEXION1.webp";
 import eternityCover from "../assets/images/works/6Pareja2/ETERNITY1.webp";
@@ -31,7 +31,7 @@ export const worksByCollection: Record<
 > = {
   pedido: {
     heading: "TRABAJOS",
-    subheading: "Esculturas bajo pedido",
+    subheading: "Esculturas en venta",
     items: [
       {
         title: "Peces",
@@ -53,7 +53,7 @@ export const worksByCollection: Record<
 
   venta: {
     heading: "TRABAJOS",
-    subheading: "Esculturas en venta",
+    subheading: "Esculturas bajo pedido",
     items: [
       {
         title: "Alma Fuerte",
@@ -84,6 +84,21 @@ export const worksByCollection: Record<
         title: "Tauro",
         slug: "tauro",
         image: tauroCover,
+      },
+      {
+        title: "Peces",
+        slug: "peces",
+        image: pecesCover,
+      },
+      {
+        title: "Coincidir",
+        slug: "coincidir",
+        image: coincidirCover,
+      },
+      {
+        title: "Venado",
+        slug: "venado",
+        image: venadoCover,
       },
     ],
   },

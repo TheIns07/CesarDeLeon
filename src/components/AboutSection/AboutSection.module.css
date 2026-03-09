@@ -1,9 +1,7 @@
 .page {
     width: 100%;
-}
-
-.page {
-    width: 100%;
+    background: #e8dfd3;
+    color: #43281c;
 }
 
 /* Hero oscuro */
@@ -49,22 +47,23 @@
 
 /* Body beige */
 .body {
-    background: #efe4d6;
-    padding: 56px 0 90px;
+    background: #e8dfd3;
+    padding: 92px 0 28px;
 }
 
 .inner {
-    width: min(1180px, calc(100% - 56px));
+    width: min(1320px, calc(100% - 120px));
     margin: 0 auto;
 }
 
 /* Block 1 */
 .block {
     display: grid;
-    grid-template-columns: minmax(540px, 760px) minmax(320px, 1fr);
-    column-gap: 46px;
-    row-gap: 26px;
+    grid-template-columns: minmax(520px, 700px) minmax(360px, 560px);
+    column-gap: 60px;
+    row-gap: 14px;
     align-items: start;
+    justify-content: space-between;
 }
 
 .blockImg {
@@ -74,83 +73,91 @@
 
 .photo {
     width: 100%;
-    height: auto;
-    border-radius: 28px;
+    height: 412px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 18px;
     display: block;
 }
 
 .blockText {
     grid-column: 2;
     grid-row: 1;
-    padding-top: 58px;
+    padding-top: 4px;
+    max-width: 560px;
 }
 
 .blockTitle {
-    margin: 0;
+    margin: 0 0 14px;
     color: #43281c;
-    font-family: "Tofino Regular", "Tofino Text", "Tofino", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-family: "Tofino Regular", "Tofino", "Tofino Text", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     font-size: 24px;
     font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    letter-spacing: 0.24em;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
 }
 
 .p {
-    margin: 34px 0 0;
+    margin: 0 0 12px;
     color: #43281c;
     font-family: "Tofino Regular", "Tofino Text", "Tofino", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     font-size: 24px;
     font-style: normal;
     font-weight: 300;
-    line-height: normal;
+    line-height: 1.14;
+}
+
+.p:last-child {
+    margin-bottom: 0;
 }
 
 .caption {
     grid-column: 1 / span 2;
     grid-row: 2;
-    margin: 0;
-    max-width: 1280px;
+    margin: 11px 0 0;
+    max-width: 100%;
     color: #43281c;
     font-family: "Tofino Regular", "Tofino Text", "Tofino", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     font-size: 24px;
     font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+    font-weight: 300;
+    line-height: 1.14;
 }
 
 .circlesWrap {
     grid-column: 1 / span 2;
     grid-row: 3;
-    margin: 18px auto 0;
-    width: 270px;
+    width: 211px;
+    margin: 27px auto;
 }
 
 .circles {
     width: 100%;
     height: auto;
     display: block;
-    opacity: 0.4;
+    opacity: 0.36;
 }
 
 /* Quote */
 .quote {
-    margin: 42px 0 34px;
+    margin: 10px 0 0;
     text-align: center;
     color: #43281c;
-    font-family: "Tofino Regular", "Tofino Text", "Tofino", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-family: "Tofino Regular", "Tofino", "Tofino Text", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     font-size: 24px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 700;
     line-height: normal;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
 }
 
 /* Carousel */
 .carousel {
     position: relative;
+    margin-top: 64px;
     border-radius: 18px;
     overflow: hidden;
 }
@@ -174,7 +181,7 @@
 
 .slideImg {
     width: 100%;
-    height: 360px;
+    height: 700px;
     object-fit: cover;
     display: block;
 }
@@ -241,7 +248,7 @@
     margin: 0 0 22px 0;
     color: #43281c;
     font-family: "Tofino Regular", "Tofino Text", "Tofino", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    font-size: 17px;
+    font-size: 24px;
     font-weight: 400;
     line-height: 1.45;
 }
@@ -266,7 +273,7 @@
 }
 
 .collections {
-    margin-top: 6rem;
+    margin-top: 90px;
     max-width: 980px;
 }
 
@@ -274,7 +281,7 @@
     margin: 0;
     color: #43281c;
     font-family: "Tofino Regular", "Tofino Text", "Tofino", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    font-size: 18px;
+    font-size: 24px;
     font-weight: 400;
     letter-spacing: 0.28em;
     text-transform: uppercase;
@@ -285,16 +292,16 @@
     max-width: 900px;
     color: #43281c;
     font-family: "Tofino Regular", "Tofino Text", "Tofino", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    font-size: 17px;
+    font-size: 24px;
     font-weight: 400;
     line-height: 1.45;
 }
 
 .discover {
-    margin: 64px 0 28px;
+    margin: 118px 0 28px;
     color: #43281c;
     font-family: "Tofino Regular", "Tofino Text", "Tofino", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    font-size: 18px;
+    font-size: 24px;
     font-weight: 400;
     letter-spacing: 0.28em;
     text-transform: uppercase;
@@ -342,36 +349,10 @@
 }
 
 /* Responsive */
-@media (max-width: 980px) {
-    .heroTitle {
-        font-size: 44px;
-    }
-
-    .block {
-        grid-template-columns: 1fr;
-    }
-
-    .block2 {
-        grid-template-columns: 1fr;
-    }
-
-    .slideImg {
-        height: 300px;
-    }
-}
-
-@media (max-width: 640px) {
-
-    .heroInner,
-    .inner {
-        width: calc(100% - 28px);
-    }
-}
-
 @media (max-width: 1180px) {
     .block {
         grid-template-columns: 1fr;
-        row-gap: 24px;
+        row-gap: 20px;
     }
 
     .blockImg,
@@ -383,41 +364,25 @@
     }
 
     .blockText {
+        max-width: 100%;
         padding-top: 0;
+    }
+
+    .photo {
+        height: auto;
+        aspect-ratio: 1.55 / 1;
+        border-radius: 18px;
     }
 
     .caption {
         max-width: 100%;
+        margin-top: 4px;
     }
 
     .circlesWrap {
         margin: 8px auto 0;
     }
-}
 
-@media (max-width: 640px) {
-
-    .blockTitle,
-    .p,
-    .caption,
-    .quote {
-        font-size: 18px;
-    }
-
-    .blockTitle {
-        letter-spacing: 0.14em;
-    }
-
-    .photo {
-        border-radius: 18px;
-    }
-
-    .circlesWrap {
-        width: 180px;
-    }
-}
-
-@media (max-width: 1180px) {
     .block2 {
         grid-template-columns: 1fr;
         gap: 34px;
@@ -439,6 +404,66 @@
 }
 
 @media (max-width: 980px) {
+    .heroInner {
+        width: min(1280px, calc(100% - 56px));
+    }
+
+    .heroLogoWrap {
+        margin-top: 170px;
+        max-width: 560px;
+    }
+
+    .heroLogo {
+        max-width: 520px;
+    }
+
+    .heroText {
+        font-size: 20px;
+    }
+
+    .body {
+        padding: 72px 0 24px;
+    }
+
+    .inner {
+        width: calc(100% - 72px);
+    }
+
+    .block {
+        row-gap: 12px;
+    }
+
+    .blockTitle {
+        font-size: 17px;
+        letter-spacing: 0.18em;
+        font-weight: 700;
+    }
+
+    .p,
+    .caption {
+        font-size: 16px;
+        line-height: 1.22;
+    }
+
+    .caption {
+        margin-top: 2px;
+    }
+
+    .circlesWrap {
+        margin-top: 8px;
+    }
+
+    .quote {
+        font-size: 15px;
+        letter-spacing: 0.18em;
+        font-weight: 700;
+        margin-top: 8px;
+    }
+
+    .slideImg {
+        height: 300px;
+    }
+
     .block2P,
     .collectionsText {
         font-size: 16px;
@@ -463,6 +488,70 @@
 }
 
 @media (max-width: 640px) {
+    .heroInner,
+    .inner {
+        width: calc(100% - 28px);
+    }
+
+    .hero {
+        min-height: 560px;
+    }
+
+    .heroInner {
+        padding: 72px 0 72px;
+    }
+
+    .heroLogoWrap {
+        margin-top: 120px;
+        max-width: 360px;
+    }
+
+    .heroLogo {
+        max-width: 320px;
+    }
+
+    .heroText {
+        margin-top: 22px;
+        font-size: 16px;
+        line-height: 1.35;
+    }
+
+    .body {
+        padding: 72px 0 24px;
+    }
+
+    .blockTitle {
+        font-size: 15px;
+        letter-spacing: 0.16em;
+        font-weight: 700;
+    }
+
+    .p,
+    .caption {
+        font-size: 15px;
+        line-height: 1.24;
+    }
+
+    .caption {
+        margin-top: 6px;
+    }
+
+    .quote {
+        font-size: 14px;
+        letter-spacing: 0.14em;
+        margin-top: 12px;
+        font-weight: 700;
+    }
+
+    .photo {
+        border-radius: 14px;
+    }
+
+    .circlesWrap {
+        width: 120px;
+        margin-top: 10px;
+    }
+
     .block2 {
         margin-top: 52px;
     }

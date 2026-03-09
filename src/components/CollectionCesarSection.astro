@@ -1,0 +1,193 @@
+---
+import styles from "./CollectionCesarSection.module.css";
+import { Image } from "astro:assets";
+
+import CesarExhibicion1 from "../assets/images/works/Cesar/Notenemos.webp";
+import CesarExhibicion2 from "../assets/images/works/Cesar/SinNombre1.webp";
+import CesarExhibicion3 from "../assets/images/works/Cesar/SinNombre2.webp";
+
+const cesarWorks = [
+	{
+		title: "En exhibición 1",
+		image: CesarExhibicion1,
+	},
+	{
+		title: "En exhibición 2",
+		image: CesarExhibicion2,
+	},
+	{
+		title: "En exhibición 3",
+		image: CesarExhibicion3,
+	},
+];
+---
+
+<section
+	class={styles.section}
+	aria-label="Colección César"
+	id="coleccion-cesar"
+>
+	<div class={styles.inner}>
+		<header class={styles.header}>
+			<div>
+				<p class={styles.eyebrow}>COLECCIÓN CÉSAR</p>
+				<p class={styles.sub}>Obras en exhibición</p>
+			</div>
+		</header>
+
+		<div class={styles.grid}>
+			{
+				cesarWorks.map((item) => (
+					<article class={styles.card} aria-label={item.title}>
+						<div
+							class={styles.frame}
+							aria-label={`Imagen de ${item.title}`}
+						>
+							<div
+								class={styles.slide}
+								data-active="true"
+								aria-hidden="false"
+							>
+								<Image
+									class={styles.img}
+									src={item.image}
+									alt={item.title}
+									loading="lazy"
+									decoding="async"
+								/>
+							</div>
+						</div>
+
+						<div class={styles.caption}>{item.title}</div>
+					</article>
+				))
+			}
+		</div>
+
+		<section class={styles.formSection} aria-label="Formulario de contacto">
+			<h3 class={styles.formTitle}>
+				CONVIERTE UNA IDEA, RECUERDO O EMOCIÓN EN UNA OBRA
+				<br />
+				ÚNICA PARA TU HOGAR.
+			</h3>
+
+			<form class={styles.form} id="contactFormCesar" novalidate>
+				<div class={styles.honey} aria-hidden="true">
+					<label>
+						Don’t fill this out:
+						<input
+							name="bot-field"
+							type="text"
+							tabindex="-1"
+							autocomplete="off"
+						/>
+					</label>
+				</div>
+
+				<div class={styles.formRow}>
+					<label class={styles.label}>
+						<span class={styles.labelText}> Nombre completo </span>
+						<input
+							class={styles.input}
+							name="name"
+							type="text"
+							required
+						/>
+					</label>
+
+					<label class={styles.label}>
+						<span class={styles.labelText}>
+							Teléfono o correo
+						</span>
+						<input
+							class={styles.input}
+							name="contact"
+							type="text"
+							required
+						/>
+					</label>
+				</div>
+
+				<label class={styles.label}>
+					<span class={styles.labelText}>
+						Cuéntame más de tu idea, ¿cómo puedo ayudarte?
+					</span>
+					<textarea class={styles.textarea} name="message" required
+					></textarea>
+				</label>
+
+				<div class={styles.formActions}>
+					<div
+						class={styles.formStatus}
+						data-form-status
+						aria-live="polite"
+					>
+					</div>
+
+					<button class={styles.submit} type="submit" data-submit>
+						Enviar
+					</button>
+				</div>
+			</form>
+		</section>
+	</div>
+
+	<script is:inline>
+		(() => {
+			const root = document.getElementById("coleccion-cesar");
+			if (!root) return;
+
+			const form = root.querySelector("#contactFormCesar");
+			const statusEl = root.querySelector("[data-form-status]");
+			const submitBtn = root.querySelector("[data-submit]");
+
+			if (!form) return;
+
+			form.addEventListener("submit", async (e) => {
+				e.preventDefault();
+
+				const fd = new FormData(form);
+				if (String(fd.get("bot-field") || "").trim() !== "") return;
+
+				const payload = {
+					name: String(fd.get("name") || "").trim(),
+					contact: String(fd.get("contact") || "").trim(),
+					message: String(fd.get("message") || "").trim(),
+				};
+
+				if (!payload.name || !payload.contact || !payload.message) {
+					if (statusEl) {
+						statusEl.textContent =
+							"Por favor completa todos los campos.";
+					}
+					return;
+				}
+
+				try {
+					if (statusEl) statusEl.textContent = "";
+					if (submitBtn) submitBtn.disabled = true;
+
+					const res = await fetch("/.netlify/functions/contact", {
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify(payload),
+					});
+
+					if (!res.ok) throw new Error(await res.text());
+
+					form.reset();
+					if (statusEl) {
+						statusEl.textContent = "Mensaje enviado ✅";
+					}
+				} catch {
+					if (statusEl) {
+						statusEl.textContent =
+							"No se pudo enviar. Intenta de nuevo.";
+					}
+				} finally {
+					if (submitBtn) submitBtn.disabled = false;
+				}
+			});
+		})();
+	</script>
+</section>

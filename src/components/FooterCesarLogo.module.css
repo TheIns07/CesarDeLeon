@@ -90,7 +90,7 @@
 }
 
 .logo {
-    width: min(760px, 100%);
+    width: min(760px, 80%);
     height: auto;
     display: block;
     opacity: 0.98;

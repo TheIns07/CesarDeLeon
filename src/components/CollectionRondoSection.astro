@@ -1,0 +1,202 @@
+---
+import styles from "./CollectionCesarSection.module.css";
+import { Image } from "astro:assets";
+import { worksByCollection } from "../data/works";
+import { productsBySlug } from "../data/products";
+import CirclesImg from "../assets/images/contacts/circles.webp";
+
+const rondo = worksByCollection.venta;
+---
+
+<section
+    class={styles.section}
+    aria-label="Colección Rondó"
+    id="coleccion-rondo"
+>
+    <div class={styles.inner}>
+        <header class={styles.header}>
+            <div>
+                <p class={styles.eyebrow}>COLECCIÓN RONDÓ</p>
+                <p class={styles.sub}>Esculturas bajo pedido</p>
+            </div>
+        </header>
+
+        <div class={styles.grid}>
+            {
+                rondo.items.map((item) => {
+                    const product = productsBySlug[item.slug];
+                    const gallery = product?.images?.length
+                        ? product.images
+                        : [item.image];
+
+                    return (
+                        <a
+                            class={styles.card}
+                            href={`/producto/${item.slug}`}
+                            aria-label={item.title}
+                        >
+                            <div
+                                class={styles.frame}
+                                data-card-carousel
+                                aria-label={`Galería de ${item.title}`}
+                            >
+                                {gallery.map((img, idx) => (
+                                    <div
+                                        class={styles.slide}
+                                        data-card-slide
+                                        data-active={
+                                            idx === 0 ? "true" : "false"
+                                        }
+                                        aria-hidden={
+                                            idx === 0 ? "false" : "true"
+                                        }
+                                    >
+                                        <Image
+                                            class={styles.img}
+                                            src={img}
+                                            alt={`${item.title} - imagen ${idx + 1}`}
+                                            loading={
+                                                idx === 0 ? "eager" : "lazy"
+                                            }
+                                            decoding="async"
+                                        />
+                                    </div>
+                                ))}
+
+                                {gallery.length > 1 && (
+                                    <>
+                                        <button
+                                            type="button"
+                                            class={`${styles.navBtn} ${styles.navPrev}`}
+                                            aria-label={`Imagen anterior de ${item.title}`}
+                                            data-card-prev
+                                        >
+                                            ‹
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            class={`${styles.navBtn} ${styles.navNext}`}
+                                            aria-label={`Imagen siguiente de ${item.title}`}
+                                            data-card-next
+                                        >
+                                            ›
+                                        </button>
+                                    </>
+                                )}
+                            </div>
+
+                            <div class={styles.caption}>{item.title}</div>
+                        </a>
+                    );
+                })
+            }
+        </div>
+
+        <section class={styles.contactSection} aria-label="Contacto">
+            <div class={styles.contactRow}>
+                <div class={styles.circles}>
+                    <Image
+                        src={CirclesImg}
+                        alt=""
+                        class={styles.circlesImg}
+                        loading="lazy"
+                        decoding="async"
+                    />
+                </div>
+
+                <div class={styles.contactBox}>
+                    <h3 class={styles.contactTitle}>CONTÁCTAME</h3>
+
+                    <ul class={styles.contactList}>
+                        <li class={styles.contactItem}>
+                            <span class={styles.icon} aria-hidden="true">✉</span
+                            >
+                            <a
+                                class={styles.contactLink}
+                                href="mailto:cesardel@gmail.com"
+                            >
+                                cesardel@gmail.com
+                            </a>
+                        </li>
+                        <li class={styles.contactItem}>
+                            <span class={styles.icon} aria-hidden="true">☎</span
+                            >
+                            <a
+                                class={styles.contactLink}
+                                href="/contacto"
+                                aria-label="Ir a contacto"
+                            >
+                                Whatsapp
+                            </a>
+                        </li>
+                        <li class={styles.contactItem}>
+                            <span class={styles.icon} aria-hidden="true">f</span
+                            >
+                            <a
+                                class={styles.contactLink}
+                                href="/contacto"
+                                aria-label="Ir a Facebook"
+                            >
+                                Facebook
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script is:inline>
+        (() => {
+            const root = document.getElementById("coleccion-rondo");
+            if (!root) return;
+
+            const carousels = Array.from(
+                root.querySelectorAll("[data-card-carousel]"),
+            );
+
+            carousels.forEach((carousel) => {
+                const slides = Array.from(
+                    carousel.querySelectorAll("[data-card-slide]"),
+                );
+                const prevBtn = carousel.querySelector("[data-card-prev]");
+                const nextBtn = carousel.querySelector("[data-card-next]");
+
+                if (slides.length <= 1) return;
+
+                let index = 0;
+
+                const paint = (nextIndex) => {
+                    index = (nextIndex + slides.length) % slides.length;
+
+                    slides.forEach((slide, i) => {
+                        const active = i === index;
+                        slide.setAttribute(
+                            "data-active",
+                            active ? "true" : "false",
+                        );
+                        slide.setAttribute(
+                            "aria-hidden",
+                            active ? "false" : "true",
+                        );
+                    });
+                };
+
+                prevBtn?.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    paint(index - 1);
+                });
+
+                nextBtn?.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    paint(index + 1);
+                });
+
+                paint(0);
+            });
+        })();
+    </script>
+</section>

@@ -5,9 +5,9 @@ import MenuLogoUrl from "../assets/logos/Menu.svg?url";
 const { pathname } = Astro.url;
 
 const links = [
-    { href: "/", label: "Colección César", mode: "cesar" },
+    { href: "/coleccion-cesar", label: "Colección César" },
     { href: "/sobre-mi", label: "Sobre mí" },
-    { href: "/#coleccion-rondo", label: "Colección Rondó", mode: "rondo" },
+    { href: "/coleccion-rondo", label: "Colección Rondó" },
     { href: "/contacto", label: "Contacto" },
 ];
 
@@ -29,17 +29,23 @@ const themeClass = isDarkRoute ? styles.dark : styles.light;
 
         <ul class={styles.navLinks}>
             {
-                links.map((l) => (
-                    <li>
-                        <a
-                            class={styles.navLink}
-                            href={l.href}
-                            {...(l.mode ? { "data-mode": l.mode } : {})}
-                        >
-                            {l.label}
-                        </a>
-                    </li>
-                ))
+                links.map((l) => {
+                    const isActive =
+                        pathname === l.href ||
+                        (l.href !== "/" && pathname.startsWith(l.href));
+
+                    return (
+                        <li>
+                            <a
+                                class={styles.navLink}
+                                href={l.href}
+                                aria-current={isActive ? "page" : undefined}
+                            >
+                                {l.label}
+                            </a>
+                        </li>
+                    );
+                })
             }
         </ul>
     </nav>
