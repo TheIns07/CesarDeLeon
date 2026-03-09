@@ -12,7 +12,7 @@ export async function handler(event) {
             },
             body: JSON.stringify({
                 from: "Contacto Web <onboarding@resend.dev>", // luego lo cambias a tu dominio
-                to: ["cesardel@gmail.com"],
+                to: ["inscreup@gmail.com"],
                 subject: `Nuevo contacto: ${name}`,
                 html: `
             <h2>Nuevo mensaje desde la web</h2>
