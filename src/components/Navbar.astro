@@ -2,7 +2,9 @@
 import styles from "./Navbar.module.css";
 import MenuLogoUrl from "../assets/logos/Menu.svg?url";
 
-const { pathname } = Astro.url;
+const rawPathname = Astro.url.pathname;
+const pathname =
+    rawPathname.length > 1 ? rawPathname.replace(/\/+$/, "") : rawPathname;
 
 const links = [
     { href: "/coleccion-cesar", label: "Colección César" },

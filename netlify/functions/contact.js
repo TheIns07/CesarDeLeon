@@ -66,9 +66,9 @@ export async function handler(event) {
             body: JSON.stringify({
                 // Mientras uses onboarding, normalmente solo podrás enviar
                 // a tu propia dirección de Resend/cuenta.
-                from: "Contacto Web <onboarding@resend.dev>",
-                to: ["arturoinscreup2401@hotmail.com"],
-                subject: `Nuevo contacto: ${name}`,
+                from: "Interes en obra <onboarding@resend.dev>",
+                to: ["cesardel@gmail.com"],
+                subject: `Nueva solicitud: ${name}`,
                 reply_to: contact,
                 html: `
             <h2>Nuevo mensaje desde la web</h2>
