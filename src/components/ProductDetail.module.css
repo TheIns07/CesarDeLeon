@@ -1,0 +1,270 @@
+.page {
+    background: #efe4d6;
+    min-height: 100vh;
+    padding: 80px 0 60px;
+}
+
+.back {
+    color: rgba(35, 22, 16, 0.85);
+    text-decoration: none;
+    font-family: "Tofino Text", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-size: 14px;
+}
+
+.layout {
+    width: min(1180px, calc(100% - 56px));
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 92px 560px 1fr;
+    gap: 36px;
+    align-items: start;
+}
+
+/* thumbs */
+.thumbs {
+    display: grid;
+    gap: 18px;
+    padding-top: 20px;
+}
+
+.thumbBtn {
+    border: 0;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    border-radius: 14px;
+}
+
+.thumbBtn[data-active="true"] {
+    outline: 2px solid rgba(35, 22, 16, 0.35);
+    outline-offset: 3px;
+}
+
+.thumbImg {
+    width: 92px;
+    height: 92px;
+    object-fit: cover;
+    border-radius: 14px;
+    display: block;
+}
+
+/* main image */
+.media {
+    padding-top: 20px;
+}
+
+.mainBtn {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    cursor: zoom-in;
+}
+
+.mainImg {
+    width: 100%;
+    height: auto;
+    border-radius: 18px;
+    display: block;
+    transition:
+        transform 320ms ease,
+        opacity 240ms ease,
+        filter 240ms ease;
+    transform-origin: center center;
+    opacity: 1;
+    filter: blur(0);
+}
+
+.mainImg[data-switching="true"] {
+    opacity: 0;
+    transform: translateY(8px) scale(1.01);
+    filter: blur(2px);
+}
+
+/* content */
+.content {
+    padding-top: 34px;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.title {
+    margin: 0;
+    font-family: "Tofino Text", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    letter-spacing: 0.22em;
+    font-size: 42px;
+    color: rgba(35, 22, 16, 0.92);
+}
+
+.subtitle {
+    margin: 18px 0 0;
+    font-family: "Tofino Text", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-size: 20px;
+    color: rgba(35, 22, 16, 0.75);
+}
+
+.price {
+    margin: 70px 0 0;
+    font-family: "Tofino Text", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    color: rgba(35, 22, 16, 0.8);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.priceLabel {
+    font-weight: 600;
+}
+
+.priceValue {
+    font-weight: 600;
+}
+
+.cta {
+    margin-top: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 26px;
+    border-radius: 999px;
+    text-decoration: none;
+    background: #2b1b14;
+    color: #efe4d6;
+    font-family: "Tofino Text", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-size: 14px;
+}
+
+.specs {
+    margin-top: 80px;
+}
+
+.specsTitle {
+    margin: 0 0 18px 0;
+    font-family: "Tofino Text", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-size: 28px;
+    color: rgba(35, 22, 16, 0.9);
+}
+
+.specsList {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 14px 18px;
+    margin: 0;
+}
+
+.specKey {
+    font-family: "Tofino Text", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-weight: 700;
+    color: rgba(35, 22, 16, 0.82);
+    font-size: 13px;
+}
+
+.specVal {
+    margin: 0;
+    font-family: "Tofino Text", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    color: rgba(35, 22, 16, 0.72);
+    font-size: 13px;
+}
+
+.backWrap {
+    margin-top: 40px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* modal */
+.modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    z-index: 60;
+}
+
+.modal[data-opened="true"] {
+    display: block;
+}
+
+.modalBackdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+}
+
+.modalCard {
+    position: relative;
+    width: min(980px, calc(100% - 40px));
+    max-height: 90vh;
+    margin: 5vh auto 0;
+    background: #111;
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+.modalScroller {
+    max-height: 90vh;
+    overflow: auto;
+}
+
+.modalClose {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    z-index: 2;
+    border: 0;
+    cursor: pointer;
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+}
+
+.modalImg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+
+@media (max-width: 980px) {
+    .layout {
+        grid-template-columns: 1fr;
+        gap: 22px;
+    }
+
+    .thumbs {
+        grid-auto-flow: column;
+        grid-auto-columns: 92px;
+        overflow-x: auto;
+        padding-top: 0;
+    }
+
+    .media,
+    .content {
+        padding-top: 0;
+    }
+
+    .price {
+        margin-top: 28px;
+    }
+
+    .specs {
+        margin-top: 44px;
+    }
+
+    .backWrap {
+        margin-top: 28px;
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 640px) {
+    .layout {
+        width: calc(100% - 28px);
+    }
+
+    .title {
+        font-size: 34px;
+    }
+}

@@ -1,41 +1,512 @@
 ---
 import styles from "./WorksSection.module.css";
 import { Image } from "astro:assets";
-import type { CollectionId } from "../data/works";
 import { worksByCollection } from "../data/works";
+import { productsBySlug } from "../data/products";
 
-type Props = { collectionId: CollectionId };
-const { collectionId } = Astro.props;
-const data = worksByCollection[collectionId];
+type Props = { defaultTab?: "pedido" | "venta" };
+const { defaultTab = "venta" } = Astro.props;
+
+const pedido = worksByCollection.pedido;
+const venta = worksByCollection.venta;
+
+import CirclesImg from "../assets/images/contacts/circles.webp";
 ---
 
-<section class={styles.section} aria-label="Trabajos">
-  <div class={styles.inner}>
-    <header class={styles.header}>
-      <div>
-        <p class={styles.eyebrow}>{data.heading}</p>
-        <p class={styles.sub}>{data.subheading}</p>
-      </div>
+<section
+    class={styles.section}
+    aria-label="Trabajos"
+    id="trabajos"
+    data-works
+    data-default-tab={defaultTab}
+>
+    <div class={styles.inner}>
+        <header class={styles.header}>
+            <div>
+                <p class={styles.eyebrow}>TRABAJOS</p>
+                <p class={styles.sub} data-subtitle>
+                    {
+                        defaultTab === "venta"
+                            ? venta.subheading
+                            : pedido.subheading
+                    }
+                </p>
+            </div>
 
-      <div class={styles.switch} aria-label="Selector de colección">
-        <a class={`${styles.pill} ${collectionId === "pedido" ? styles.pillActive : ""}`} href="/trabajos/pedido">
-          Bajo pedido
-        </a>
-        <a class={`${styles.pill} ${collectionId === "venta" ? styles.pillActive : ""}`} href="/trabajos/venta">
-          En venta
-        </a>
-      </div>
-    </header>
+            <div
+                class={styles.switch}
+                role="tablist"
+                aria-label="Selector de colección"
+            >
+                <button
+                    type="button"
+                    class={styles.pill}
+                    role="tab"
+                    aria-controls="panel-venta"
+                    data-tab="venta"
+                    data-active={defaultTab === "venta" ? "true" : "false"}
+                    aria-selected={defaultTab === "venta" ? "true" : "false"}
+                >
+                    En venta
+                </button>
 
-    <div class={styles.grid}>
-      {data.items.map((item) => (
-        <a class={styles.card} href={`/trabajos/${collectionId}/${item.slug}`} aria-label={item.title}>
-          <div class={styles.frame}>
-            <Image class={styles.img} src={item.image} alt={item.title} loading="lazy" decoding="async" />
-          </div>
-          <div class={styles.caption}>{item.title}</div>
-        </a>
-      ))}
+                <button
+                    type="button"
+                    class={styles.pill}
+                    role="tab"
+                    aria-controls="panel-pedido"
+                    data-tab="pedido"
+                    data-active={defaultTab === "pedido" ? "true" : "false"}
+                    aria-selected={defaultTab === "pedido" ? "true" : "false"}
+                >
+                    Bajo pedido
+                </button>
+            </div>
+        </header>
+
+        <div class={styles.panels}>
+            <div
+                id="panel-venta"
+                class={styles.panel}
+                role="tabpanel"
+                aria-label="Esculturas en venta"
+                data-panel="venta"
+                data-active={defaultTab === "venta" ? "true" : "false"}
+                aria-hidden={defaultTab === "venta" ? "false" : "true"}
+            >
+                <div class={styles.grid}>
+                    {
+                        venta.items.map((item) => {
+                            const product = productsBySlug[item.slug];
+                            const gallery = product?.images?.length
+                                ? product.images
+                                : [item.image];
+
+                            return (
+                                <a
+                                    class={styles.card}
+                                    href={`/producto/${item.slug}`}
+                                    aria-label={item.title}
+                                >
+                                    <div
+                                        class={styles.frame}
+                                        data-card-carousel
+                                        aria-label={`Galería de ${item.title}`}
+                                    >
+                                        {gallery.map((img, idx) => (
+                                            <div
+                                                class={styles.slide}
+                                                data-card-slide
+                                                data-active={
+                                                    idx === 0 ? "true" : "false"
+                                                }
+                                                aria-hidden={
+                                                    idx === 0 ? "false" : "true"
+                                                }
+                                            >
+                                                <Image
+                                                    class={styles.img}
+                                                    src={img}
+                                                    alt={`${item.title} - imagen ${idx + 1}`}
+                                                    loading={
+                                                        idx === 0
+                                                            ? "eager"
+                                                            : "lazy"
+                                                    }
+                                                    decoding="async"
+                                                />
+                                            </div>
+                                        ))}
+
+                                        {gallery.length > 1 && (
+                                            <>
+                                                <button
+                                                    type="button"
+                                                    class={`${styles.navBtn} ${styles.navPrev}`}
+                                                    aria-label={`Imagen anterior de ${item.title}`}
+                                                    data-card-prev
+                                                >
+                                                    ‹
+                                                </button>
+
+                                                <button
+                                                    type="button"
+                                                    class={`${styles.navBtn} ${styles.navNext}`}
+                                                    aria-label={`Imagen siguiente de ${item.title}`}
+                                                    data-card-next
+                                                >
+                                                    ›
+                                                </button>
+                                            </>
+                                        )}
+                                    </div>
+
+                                    <div class={styles.caption}>
+                                        {item.title}
+                                    </div>
+                                </a>
+                            );
+                        })
+                    }
+                </div>
+
+                <section class={styles.contactSection} aria-label="Contacto">
+                    <div class={styles.contactRow}>
+                        <div class={styles.circles}>
+                            <Image
+                                src={CirclesImg}
+                                alt=""
+                                class={styles.circlesImg}
+                                loading="lazy"
+                                decoding="async"
+                            />
+                        </div>
+
+                        <div class={styles.contactBox}>
+                            <h3 class={styles.contactTitle}>CONTÁCTAME</h3>
+
+                            <ul class={styles.contactList}>
+                                <li class={styles.contactItem}>
+                                    <span
+                                        class={styles.icon}
+                                        aria-hidden="true"
+                                    >
+                                        ✉
+                                    </span>
+                                    <a
+                                        class={styles.contactLink}
+                                        href="mailto:cesardel@gmail.com"
+                                    >
+                                        cesardel@gmail.com
+                                    </a>
+                                </li>
+                                <li class={styles.contactItem}>
+                                    <span
+                                        class={styles.icon}
+                                        aria-hidden="true"
+                                    >
+                                        ☎
+                                    </span>
+                                    <a
+                                        class={styles.contactLink}
+                                        href="#"
+                                        aria-label="Whatsapp"
+                                    >
+                                        Whatsapp
+                                    </a>
+                                </li>
+                                <li class={styles.contactItem}>
+                                    <span
+                                        class={styles.icon}
+                                        aria-hidden="true"
+                                    >
+                                        f
+                                    </span>
+                                    <a
+                                        class={styles.contactLink}
+                                        href="#"
+                                        aria-label="Facebook"
+                                    >
+                                        Facebook
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div
+                id="panel-pedido"
+                class={styles.panel}
+                role="tabpanel"
+                aria-label="Esculturas bajo pedido"
+                data-panel="pedido"
+                data-active={defaultTab === "pedido" ? "true" : "false"}
+                aria-hidden={defaultTab === "pedido" ? "false" : "true"}
+            >
+                <div class={styles.grid}>
+                    {
+                        pedido.items.map((item) => {
+                            const product = productsBySlug[item.slug];
+                            const gallery = product?.images?.length
+                                ? product.images
+                                : [item.image];
+
+                            return (
+                                <a
+                                    class={styles.card}
+                                    href={`/producto/${item.slug}`}
+                                    aria-label={item.title}
+                                >
+                                    <div
+                                        class={styles.frame}
+                                        data-card-carousel
+                                        data-interval="2400"
+                                    >
+                                        {gallery.map((img, idx) => (
+                                            <div
+                                                class={styles.slide}
+                                                data-card-slide
+                                                data-active={
+                                                    idx === 0 ? "true" : "false"
+                                                }
+                                                aria-hidden={
+                                                    idx === 0 ? "false" : "true"
+                                                }
+                                            >
+                                                <Image
+                                                    class={styles.img}
+                                                    src={img}
+                                                    alt={`${item.title} - imagen ${idx + 1}`}
+                                                    loading={
+                                                        idx === 0
+                                                            ? "eager"
+                                                            : "lazy"
+                                                    }
+                                                    decoding="async"
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    <div class={styles.caption}>
+                                        {item.title}
+                                    </div>
+                                </a>
+                            );
+                        })
+                    }
+                </div>
+
+                <section
+                    class={styles.formSection}
+                    aria-label="Formulario de contacto"
+                >
+                    <h3 class={styles.formTitle}>
+                        CONVIERTE UNA IDEA, RECUERDO O EMOCIÓN EN UNA OBRA
+                        <br />
+                        ÚNICA PARA TU HOGAR.
+                    </h3>
+
+                    <form class={styles.form} id="contactForm" novalidate>
+                        <div class={styles.honey} aria-hidden="true">
+                            <label>
+                                Don’t fill this out:
+                                <input
+                                    name="bot-field"
+                                    type="text"
+                                    tabindex="-1"
+                                    autocomplete="off"
+                                />
+                            </label>
+                        </div>
+
+                        <div class={styles.formRow}>
+                            <label class={styles.label}>
+                                <span class={styles.labelText}>
+                                    Nombre completo
+                                </span>
+                                <input
+                                    class={styles.input}
+                                    name="name"
+                                    type="text"
+                                    required
+                                />
+                            </label>
+
+                            <label class={styles.label}>
+                                <span class={styles.labelText}>
+                                    Teléfono o correo
+                                </span>
+                                <input
+                                    class={styles.input}
+                                    name="contact"
+                                    type="text"
+                                    required
+                                />
+                            </label>
+                        </div>
+
+                        <label class={styles.label}>
+                            <span class={styles.labelText}>
+                                Cuéntame más de tu idea, ¿cómo puedo ayudarte?
+                            </span>
+                            <textarea
+                                class={styles.textarea}
+                                name="message"
+                                required></textarea>
+                        </label>
+
+                        <div class={styles.formActions}>
+                            <div
+                                class={styles.formStatus}
+                                data-form-status
+                                aria-live="polite"
+                            >
+                            </div>
+                            <button
+                                class={styles.submit}
+                                type="submit"
+                                data-submit
+                            >
+                                Enviar
+                            </button>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
     </div>
-  </div>
+
+    <script is:inline>
+        (() => {
+            const root = document.querySelector("[data-works]");
+            if (!root) return;
+    
+            const tabs = Array.from(root.querySelectorAll("[data-tab]"));
+            const panels = Array.from(root.querySelectorAll("[data-panel]"));
+            const subtitle = root.querySelector("[data-subtitle]");
+            const defaultTab = root.getAttribute("data-default-tab") || "venta";
+    
+            const subByTab = {
+                pedido: "Esculturas bajo pedido",
+                venta: "Esculturas en venta",
+            };
+    
+            const isValidTab = (t) => t === "pedido" || t === "venta";
+    
+            const emit = (key) =>
+                window.dispatchEvent(
+                    new CustomEvent("works:tabchange", {
+                        detail: { tab: key },
+                    }),
+                );
+    
+            const setTab = (key) => {
+                if (!isValidTab(key)) return;
+    
+                tabs.forEach((t) => {
+                    const active = t.dataset.tab === key;
+                    t.dataset.active = active ? "true" : "false";
+                    t.setAttribute("aria-selected", active ? "true" : "false");
+                });
+    
+                panels.forEach((p) => {
+                    const active = p.dataset.panel === key;
+                    p.dataset.active = active ? "true" : "false";
+                    p.setAttribute("aria-hidden", active ? "false" : "true");
+                });
+    
+                if (subtitle && subByTab[key]) {
+                    subtitle.textContent = subByTab[key];
+                }
+    
+                emit(key);
+            };
+    
+            tabs.forEach((t) =>
+                t.addEventListener("click", () => setTab(t.dataset.tab)),
+            );
+    
+            setTab(defaultTab);
+    
+            window.addEventListener("works:forceTab", (e) => {
+                const key = e.detail?.tab;
+                if (isValidTab(key)) setTab(key);
+            });
+    
+            const carousels = Array.from(
+                root.querySelectorAll("[data-card-carousel]"),
+            );
+    
+            carousels.forEach((carousel) => {
+                const slides = Array.from(
+                    carousel.querySelectorAll("[data-card-slide]"),
+                );
+                const prevBtn = carousel.querySelector("[data-card-prev]");
+                const nextBtn = carousel.querySelector("[data-card-next]");
+    
+                if (slides.length <= 1) return;
+    
+                let index = 0;
+    
+                const paint = (nextIndex) => {
+                    index = (nextIndex + slides.length) % slides.length;
+    
+                    slides.forEach((slide, i) => {
+                        const active = i === index;
+                        slide.setAttribute("data-active", active ? "true" : "false");
+                        slide.setAttribute("aria-hidden", active ? "false" : "true");
+                    });
+                };
+    
+                prevBtn?.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    paint(index - 1);
+                });
+    
+                nextBtn?.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    paint(index + 1);
+                });
+    
+                paint(0);
+            });
+    
+            const form = root.querySelector("#contactForm");
+            const statusEl = root.querySelector("[data-form-status]");
+            const submitBtn = root.querySelector("[data-submit]");
+    
+            if (form) {
+                form.addEventListener("submit", async (e) => {
+                    e.preventDefault();
+    
+                    const fd = new FormData(form);
+                    if (String(fd.get("bot-field") || "").trim() !== "") return;
+    
+                    const payload = {
+                        name: String(fd.get("name") || "").trim(),
+                        contact: String(fd.get("contact") || "").trim(),
+                        message: String(fd.get("message") || "").trim(),
+                    };
+    
+                    if (!payload.name || !payload.contact || !payload.message) {
+                        if (statusEl) {
+                            statusEl.textContent =
+                                "Por favor completa todos los campos.";
+                        }
+                        return;
+                    }
+    
+                    try {
+                        if (statusEl) statusEl.textContent = "";
+                        if (submitBtn) submitBtn.disabled = true;
+    
+                        const res = await fetch("/.netlify/functions/contact", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(payload),
+                        });
+    
+                        if (!res.ok) throw new Error(await res.text());
+    
+                        form.reset();
+                        if (statusEl) {
+                            statusEl.textContent = "Mensaje enviado ✅";
+                        }
+                    } catch {
+                        if (statusEl) {
+                            statusEl.textContent =
+                                "No se pudo enviar. Intenta de nuevo.";
+                        }
+                    } finally {
+                        if (submitBtn) submitBtn.disabled = false;
+                    }
+                });
+            }
+        })();
+    </script>
 </section>

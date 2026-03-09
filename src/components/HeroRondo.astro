@@ -1,0 +1,37 @@
+---
+import styles from "./HeroRondo.module.css";
+import { Image } from "astro:assets";
+
+import RondoHero from "../assets/images/RondoHero.webp";
+import RondoLogo from "../assets/images/RondoArt.webp";
+---
+
+<section class={styles.hero} aria-label="Hero Rondó">
+    <div class={styles.media}>
+        <Image
+            src={RondoHero}
+            alt="Rondó Art Collection"
+            class={styles.img}
+            loading="eager"
+        />
+        <div class={styles.vignette} aria-hidden="true"></div>
+    </div>
+
+    <div class={styles.content}>
+        <div class={styles.logoWrap}>
+            <Image
+                src={RondoLogo}
+                alt="Rondó"
+                class={styles.logo}
+                loading="eager"
+                decoding="async"
+            />
+        </div>
+        
+        <p class={styles.desc}>
+            Descubre la colección Rondó, piezas
+            <br />
+            listas para tu hogar
+        </p>
+    </div>
+</section>

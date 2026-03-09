@@ -1,0 +1,261 @@
+---
+import styles from "./AboutSection.module.css";
+import { Image } from "astro:assets";
+
+// Hero/logo
+import CesarLogoLargo from "../../assets/images/CesarLogoLargo.webp";
+
+// Imagen principal
+import Photo1 from "../../assets/images/CesarDeLeon2.webp";
+
+// Carrusel Sobre mí
+import SobreMi1 from "../../assets/images/aboutme/SOBREMI_1.webp";
+import SobreMi2 from "../../assets/images/aboutme/SOBREMI_2.webp";
+import SobreMi3 from "../../assets/images/aboutme/SOBREMI_3.webp";
+import SobreMi4 from "../../assets/images/aboutme/SOBREMI_4.webp";
+import SobreMi5 from "../../assets/images/aboutme/SOBREMI_5.webp";
+import SobreMi6 from "../../assets/images/aboutme/SOBREMI_6.webp";
+
+import Circles from "../../assets/images/contacts/circles.webp";
+import AboutArt from "../../assets/images/contacts/about-art.webp";
+
+const slides = [SobreMi1, SobreMi2, SobreMi3, SobreMi4, SobreMi5, SobreMi6];
+---
+
+<section class={styles.page} aria-label="Sobre mí" id="sobre-mi">
+    <header class={styles.hero}>
+        <div class={styles.heroInner}>
+            <div class={styles.heroLogoWrap}>
+                <Image
+                    src={CesarLogoLargo}
+                    alt="César de León"
+                    class={styles.heroLogo}
+                    loading="eager"
+                    decoding="async"
+                />
+            </div>
+
+            <p class={styles.heroText}>
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry’s standard dummy
+                text ever since the 1500s, when an unknown printer took a galley
+                of type and scrambled it to make a type specimen book.
+            </p>
+        </div>
+    </header>
+
+    <div class={styles.body}>
+        <div class={styles.inner}>
+            <section class={styles.block}>
+                <div class={styles.blockImg}>
+                    <Image
+                        src={Photo1}
+                        alt="César en su taller"
+                        class={styles.photo}
+                        loading="lazy"
+                    />
+                </div>
+
+                <div class={styles.blockText}>
+                    <h2 class={styles.blockTitle}>
+                        MI CAMINO HACIA LA
+                        <br />
+                        ESCULTURA
+                    </h2>
+
+                    <p class={styles.p}>
+                        Desde niño pasaba mucho tiempo modelando en plastilina
+                        personajes de caricaturas. Mi abuelo notó eso y me hizo
+                        un regalo muy valioso para mí: en vez de barritas de
+                        plastilina, me compró paquetes grandes de cada color.
+                    </p>
+
+                    <p class={styles.p}>
+                        A los 19 años conocí a un trabajador de mi padre. Al
+                        platicar con él me dijo que venía de Oaxaca y que era
+                        maestro tornero. Entonces, con las aprobaciones
+                        respectivas, hicimos un pequeño taller cerámico y nos
+                        pusimos a fabricar piezas de barro. Fue ahí donde
+                        comencé a crear mis primeras esculturas en este noble
+                        material.
+                    </p>
+                </div>
+
+                <p class={styles.caption}>
+                    Desde entonces y hasta hoy sigo trabajando en lo que me
+                    apasiona, investigando y experimentando con materiales y
+                    técnicas para la creación de mi obra, así como con sus
+                    texturas y acabados. Mi aprendizaje ha sido siempre
+                    empírico; la experimentación ha sido mi principal método de
+                    formación.
+                </p>
+
+                <div class={styles.circlesWrap}>
+                    <Image
+                        src={Circles}
+                        alt=""
+                        class={styles.circles}
+                        loading="lazy"
+                    />
+                </div>
+            </section>
+
+            <div class={styles.quote}>
+                “UNA VISIÓN, UN INSTANTE, DE PRONTO ARTE.”
+            </div>
+
+            <section class={styles.carousel} data-about-carousel>
+                <div class={styles.carouselTrack} data-track>
+                    {
+                        slides.map((img, i) => (
+                            <figure class={styles.slide} data-slide>
+                                <Image
+                                    src={img}
+                                    alt={`Sobre mí ${i + 1}`}
+                                    class={styles.slideImg}
+                                    loading="lazy"
+                                />
+                            </figure>
+                        ))
+                    }
+                </div>
+
+                <button
+                    class={styles.arrowLeft}
+                    type="button"
+                    aria-label="Anterior"
+                    data-prev
+                >
+                    ‹
+                </button>
+
+                <button
+                    class={styles.arrowRight}
+                    type="button"
+                    aria-label="Siguiente"
+                    data-next
+                >
+                    ›
+                </button>
+
+                <div class={styles.dots} data-dots>
+                    {
+                        slides.map((_, i) => (
+                            <button
+                                class={styles.dot}
+                                type="button"
+                                data-dot
+                                data-index={i}
+                                aria-label={`Ir a ${i + 1}`}
+                            />
+                        ))
+                    }
+                </div>
+            </section>
+
+            <section class={styles.block2}>
+                <div class={styles.block2Text}>
+                    <p class={styles.block2P}>
+                        He tenido experiencias muy gratificantes en mi carrera.
+                        Realicé para la Cervecería Cuauhtémoc una placa
+                        conmemorativa que se entregó a más de dos mil personas.
+                        También he trabajado para Cemex, Club de Golf Las
+                        Misiones, Valle Alto y Campestre.
+                    </p>
+
+                    <p class={styles.block2P}>
+                        En el año 2006 fui invitado como expositor por el Banco
+                        de Comercio Exterior al Lincoln Center de la ciudad de
+                        Nueva York. Mis esculturas también han sido elegidas en
+                        dos ocasiones por la reconocida residencia del
+                        Tecnológico de Monterrey, y han formado parte de algunos
+                        sets de telenovela de Televisa.
+                    </p>
+
+                    <p class={styles.block2P}>
+                        He participado en más de 40 exposiciones de regalo y del
+                        mueble a nivel nacional, y mi trabajo, a través de mis
+                        clientes, ha llegado a muchas personas en diferentes
+                        partes del mundo.
+                    </p>
+
+                    <section class={styles.collections}>
+                        <h3 class={styles.collectionsTitle}>
+                            SOBRE MIS COLECCIONES
+                        </h3>
+
+                        <p class={styles.collectionsText}>
+                            En mi taller trabajo esculturas originales sobre
+                            pedido, piezas únicas certificadas, así como
+                            reproducciones seriadas de la colección RONDO.
+                            Constantemente estoy creando y agregando nuevas
+                            piezas a esta colección.
+                        </p>
+
+                        <h4 class={styles.discover}>DESCUBRE:</h4>
+
+                        <div class={styles.buttons}>
+                            <a class={styles.btnLight} href="/#coleccion-rondo">
+                                Explorar Colección Rondó
+                            </a>
+                            <a class={styles.btnDark} href="/#coleccion-cesar">
+                                Explorar Colección César
+                            </a>
+                        </div>
+
+                        <a class={styles.terms} href="/contacto#terminos">
+                            Términos y condiciones
+                        </a>
+                    </section>
+                </div>
+
+                <div class={styles.block2Art}>
+                    <Image
+                        src={AboutArt}
+                        alt=""
+                        class={styles.art}
+                        loading="lazy"
+                    />
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script is:inline>
+        (() => {
+            const root = document.querySelector("[data-about-carousel]");
+            if (!root) return;
+
+            const track = root.querySelector("[data-track]");
+            const dots = Array.from(root.querySelectorAll("[data-dot]"));
+            const prev = root.querySelector("[data-prev]");
+            const next = root.querySelector("[data-next]");
+            if (!track) return;
+
+            let index = 0;
+
+            const set = (i) => {
+                index = (i + dots.length) % dots.length;
+                const w = track.clientWidth || 1;
+                track.scrollTo({ left: w * index, behavior: "smooth" });
+                dots.forEach((d, di) =>
+                    d.setAttribute(
+                        "aria-current",
+                        di === index ? "true" : "false",
+                    ),
+                );
+            };
+
+            dots.forEach((d) =>
+                d.addEventListener("click", () =>
+                    set(Number(d.dataset.index || 0)),
+                ),
+            );
+
+            prev?.addEventListener("click", () => set(index - 1));
+            next?.addEventListener("click", () => set(index + 1));
+
+            set(0);
+        })();
+    </script>
+</section>

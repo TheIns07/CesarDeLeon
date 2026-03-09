@@ -1,13 +1,65 @@
 .navWrap {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 30;
-    padding: 22px 42px;
+    z-index: 50;
+
+    background: transparent;
+    padding: 18px 0;
+
+    /* animación suave */
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    pointer-events: auto;
+    transition:
+        opacity 280ms ease,
+        transform 280ms ease,
+        visibility 280ms ease;
+
+    will-change: opacity, transform;
+
+    /* defaults */
+    --nav-text: rgba(255, 255, 255, 0.92);
+    --nav-text-shadow: 0 8px 26px rgba(0, 0, 0, 0.35);
+    --logo-filter: drop-shadow(0 6px 22px rgba(0, 0, 0, 0.45));
+}
+
+/* oculto suavemente */
+.navWrap[data-hidden="true"] {
+    opacity: 0;
+    transform: translateY(-18px);
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* visible */
+.navWrap[data-hidden="false"] {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* ✅ Sobre hero oscuro (home y sobre-mi): blanco */
+.light {
+    --nav-text: rgba(255, 255, 255, 0.92);
+    --nav-text-shadow: 0 8px 26px rgba(0, 0, 0, 0.35);
+    --logo-filter: drop-shadow(0 6px 22px rgba(0, 0, 0, 0.45));
+}
+
+/* ✅ Páginas beige (contacto / producto): café */
+.dark {
+    --nav-text: #43281c;
+    --nav-text-shadow: none;
+    --logo-filter: brightness(0) saturate(100%) invert(14%) sepia(19%) saturate(1227%) hue-rotate(349deg) brightness(91%) contrast(94%);
 }
 
 .nav {
+    width: min(1180px, calc(100% - 56px));
+    margin: 0 auto;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -23,7 +75,7 @@
     width: 44px;
     height: 44px;
     object-fit: contain;
-    filter: drop-shadow(0 6px 22px rgba(0, 0, 0, 0.45));
+    filter: var(--logo-filter);
 }
 
 .navLinks {
@@ -40,9 +92,11 @@
     font-weight: 400;
     font-size: 17px;
     line-height: 100%;
-    color: rgba(255, 255, 255, 0.92);
+
+    color: var(--nav-text);
     text-decoration: none;
-    text-shadow: 0 8px 26px rgba(0, 0, 0, 0.35);
+    text-shadow: var(--nav-text-shadow);
+
     transition: opacity 180ms ease, transform 180ms ease;
 }
 
@@ -52,8 +106,8 @@
 }
 
 @media (max-width: 960px) {
-    .navWrap {
-        padding: 18px 18px;
+    .nav {
+        width: calc(100% - 36px);
     }
 
     .navLinks {

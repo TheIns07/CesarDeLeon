@@ -2,185 +2,163 @@
 import styles from "./HeroCarousel.module.css";
 import { Image } from "astro:assets";
 
-import CesarDeLeon1 from "../assets/images/CesarDeLeon1.png";
-import CesarDeLeon2 from "../assets/images/CesarDeLeon2.png";
-import CesarDeLeon3 from "../assets/images/CesarDeLeon3.png";
-import RondoArt from "../assets/images/RondoArt.png";
+import CesarDeLeon1 from "../assets/images/CesarDeLeon1.webp";
+import CesarDeLeon2 from "../assets/images/CesarDeLeon2.webp";
+import CesarDeLeon3 from "../assets/images/CesarDeLeon3.webp";
+import CesarDeLeon6 from "../assets/images/CesarDeLeon6.webp";
+import CesarDeLeon7 from "../assets/images/CesarDeLeon7.webp";
+import CesarLogo from "../assets/images/CesarLogo.webp";
 
 const slides = [
-  {
-    img: CesarDeLeon1,
-    alt: "César de León - slide 1",
-    title: ["Cesar", "de León"],
-    subtitle: ["Esculturas organicas bajo pedido", "ideales para cualquier espacio"],
-  },
-  {
-    img: CesarDeLeon2,
-    alt: "César de León - slide 2",
-    title: ["Cesar", "de León"],
-    subtitle: ["Esculturas organicas bajo pedido", "ideales para cualquier espacio"],
-  },
-  {
-    img: CesarDeLeon3,
-    alt: "César de León - slide 3",
-    title: ["Cesar", "de León"],
-    subtitle: ["Esculturas organicas bajo pedido", "ideales para cualquier espacio"],
-  },
-  {
-    img: RondoArt,
-    alt: "Rondó - Art Collection",
-    title: ["Rondo"],
-    subtitle: ["Art Collection"],
-    kicker: ["Descubre la coleccion Rondo, piezas", "listas para tu hogar"],
-    variant: "rondo",
-  },
+    {
+        img: CesarDeLeon1,
+        alt: "César de León - slide 1",
+    },
+    {
+        img: CesarDeLeon2,
+        alt: "César de León - slide 2",
+    },
+    {
+        img: CesarDeLeon3,
+        alt: "César de León - slide 3",
+    },
+    {
+        img: CesarDeLeon6,
+        alt: "César de León - slide 4",
+    },
+    {
+        img: CesarDeLeon7,
+        alt: "César de León - slide 5",
+    },
 ];
 ---
 
 <section class={styles.hero} aria-label="Hero">
-  <div class={styles.carousel} data-carousel>
-    <div class={styles.track} data-track>
-      {slides.map((s, i) => (
-        <figure class={styles.slide} data-slide={i}>
-          <Image
-            class={styles.slideImg}
-            src={s.img}
-            alt={s.alt}
-            loading={i === 0 ? "eager" : "lazy"}
-            decoding="async"
-            format="webp"
-            quality={92}
-          />
-        </figure>
-      ))}
-    </div>
-
-    <div class={styles.vignette} aria-hidden="true"></div>
-
-    <div class={styles.contentWrap}>
-      {slides.map((s, i) => (
-        <div
-          class={`${styles.content} ${s.variant === "rondo" ? styles.contentRondo : ""}`}
-          data-content={i}
-          aria-hidden={i === 0 ? "false" : "true"}
-        >
-          <h1 class={styles.title}>
-            {s.title.map((line) => (
-              <>
-                {line}
-                <br />
-              </>
-            ))}
-          </h1>
-
-          <p class={styles.subtitle}>
-            {s.subtitle.map((line) => (
-              <>
-                {line}
-                <br />
-              </>
-            ))}
-          </p>
-
-          {s.kicker && (
-            <p class={styles.kicker}>
-              {s.kicker.map((line) => (
-                <>
-                  {line}
-                  <br />
-                </>
-              ))}
-            </p>
-          )}
+    <div class={styles.carousel} data-carousel>
+        <div class={styles.slides}>
+            {
+                slides.map((s, i) => (
+                    <figure
+                        class={styles.slide}
+                        data-slide={i}
+                        aria-hidden={i === 0 ? "false" : "true"}
+                        data-active={i === 0 ? "true" : "false"}
+                    >
+                        <Image
+                            class={styles.slideImg}
+                            src={s.img}
+                            alt={s.alt}
+                            loading={i === 0 ? "eager" : "lazy"}
+                            decoding="async"
+                            format="webp"
+                            quality={92}
+                        />
+                    </figure>
+                ))
+            }
         </div>
-      ))}
+
+        <div class={styles.vignette} aria-hidden="true"></div>
+
+        <div class={styles.overlayContent}>
+            <div class={styles.logoWrap}>
+                <Image
+                    src={CesarLogo}
+                    alt="César de León"
+                    class={styles.logoImg}
+                    loading="eager"
+                    decoding="async"
+                />
+            </div>
+
+            <p class={styles.subtitle}>
+                Esculturas orgánicas bajo pedido
+                <br />
+                ideales para cualquier espacio
+            </p>
+        </div>
+
+        <div class={styles.dots} data-dots aria-label="Carousel pagination">
+            {
+                slides.map((_, i) => (
+                    <button
+                        class={styles.dot}
+                        type="button"
+                        aria-label={`Ir a slide ${i + 1}`}
+                        data-dot
+                        data-index={i}
+                        aria-current={i === 0 ? "true" : "false"}
+                    />
+                ))
+            }
+        </div>
     </div>
 
-    <div class={styles.dots} data-dots aria-label="Carousel pagination">
-      {slides.map((_, i) => (
-        <button
-          class={styles.dot}
-          type="button"
-          aria-label={`Ir a slide ${i + 1}`}
-          data-dot
-          data-index={i}
-        />
-      ))}
-    </div>
-  </div>
+    <script is:inline>
+        (() => {
+            const root = document.querySelector("[data-carousel]");
+            if (!root) return;
 
-  <script is:inline>
-    (() => {
-      const root = document.querySelector("[data-carousel]");
-      if (!root) return;
+            const slides = Array.from(root.querySelectorAll("[data-slide]"));
+            const dots = Array.from(root.querySelectorAll("[data-dot]"));
+            if (!slides.length || !dots.length) return;
 
-      const track = root.querySelector("[data-track]");
-      const dots = Array.from(root.querySelectorAll("[data-dot]"));
-      const contents = Array.from(root.querySelectorAll("[data-content]"));
-      if (!track || dots.length === 0) return;
+            const slideCount = slides.length;
+            let index = 0;
+            let timer = null;
 
-      const slideCount = dots.length;
-      let index = 0;
-      let timer = null;
+            const updateUI = (nextIndex) => {
+                index = (nextIndex + slideCount) % slideCount;
 
-      const getSlideWidth = () => {
-        const first = track.querySelector("[data-slide='0']");
-        return first ? first.getBoundingClientRect().width : track.clientWidth;
-      };
+                slides.forEach((slide, i) => {
+                    const active = i === index;
+                    slide.setAttribute(
+                        "data-active",
+                        active ? "true" : "false",
+                    );
+                    slide.setAttribute(
+                        "aria-hidden",
+                        active ? "false" : "true",
+                    );
+                });
 
-      const setActive = (i, { smooth = true } = {}) => {
-        index = (i + slideCount) % slideCount;
+                dots.forEach((dot, i) => {
+                    dot.setAttribute(
+                        "aria-current",
+                        i === index ? "true" : "false",
+                    );
+                });
+            };
 
-        const w = getSlideWidth() || 1;
-        track.scrollTo({ left: w * index, behavior: smooth ? "smooth" : "auto" });
+            const goTo = (nextIndex) => {
+                updateUI(nextIndex);
+            };
 
-        dots.forEach((d, di) => d.setAttribute("aria-current", di === index ? "true" : "false"));
+            const stop = () => {
+                if (timer) clearInterval(timer);
+                timer = null;
+            };
 
-        contents.forEach((c, ci) => {
-          const active = ci === index;
-          c.setAttribute("aria-hidden", active ? "false" : "true");
-          c.style.opacity = active ? "1" : "0";
-          c.style.pointerEvents = active ? "auto" : "none";
-          c.style.transform = active ? "translateY(0px)" : "translateY(6px)";
-        });
-      };
+            const start = () => {
+                stop();
+                timer = setInterval(() => goTo(index + 1), 3200);
+            };
 
-      const stop = () => {
-        if (timer) clearInterval(timer);
-        timer = null;
-      };
+            updateUI(0);
+            start();
 
-      const start = () => {
-        stop();
-        timer = setInterval(() => setActive(index + 1), 4500);
-      };
+            dots.forEach((d) => {
+                d.addEventListener("click", () => {
+                    stop();
+                    goTo(Number(d.dataset.index || 0));
+                    start();
+                });
+            });
 
-      setActive(0, { smooth: false });
-      start();
-
-      dots.forEach((d) => {
-        d.addEventListener("click", () => {
-          setActive(Number(d.dataset.index || 0));
-          start();
-        });
-      });
-
-      root.addEventListener("mouseenter", stop);
-      root.addEventListener("mouseleave", start);
-      root.addEventListener("focusin", stop);
-      root.addEventListener("focusout", start);
-
-      let raf = null;
-      track.addEventListener("scroll", () => {
-        if (raf) cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(() => {
-          const w = getSlideWidth() || 1;
-          const newIndex = Math.round(track.scrollLeft / w);
-          if (newIndex !== index) setActive(newIndex, { smooth: false });
-        });
-      });
-
-      window.addEventListener("resize", () => setActive(index, { smooth: false }));
-    })();
-  </script>
+            root.addEventListener("mouseenter", stop);
+            root.addEventListener("mouseleave", start);
+            root.addEventListener("focusin", stop);
+            root.addEventListener("focusout", start);
+        })();
+    </script>
 </section>

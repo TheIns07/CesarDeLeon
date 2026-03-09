@@ -1,0 +1,504 @@
+.page {
+    width: 100%;
+}
+
+.page {
+    width: 100%;
+}
+
+/* Hero oscuro */
+.hero {
+    background: #24120d;
+    color: #f2e9dd;
+    min-height: 700px;
+    display: flex;
+}
+
+.heroInner {
+    width: min(1280px, calc(100% - 96px));
+    margin: 0 auto;
+    padding: 86px 0 96px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.heroLogoWrap {
+    width: 100%;
+    max-width: 700px;
+    margin-top: 210px;
+}
+
+.heroLogo {
+    width: 100%;
+    max-width: 640px;
+    height: auto;
+    display: block;
+}
+
+.heroText {
+    margin: 34px 0 0;
+    max-width: 1180px;
+    color: #f2e9dc;
+    font-family: "Tofino Text", "Tofino", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+}
+
+/* Body beige */
+.body {
+    background: #efe4d6;
+    padding: 56px 0 90px;
+}
+
+.inner {
+    width: min(1180px, calc(100% - 56px));
+    margin: 0 auto;
+}
+
+/* Block 1 */
+.block {
+    display: grid;
+    grid-template-columns: minmax(540px, 760px) minmax(320px, 1fr);
+    column-gap: 46px;
+    row-gap: 26px;
+    align-items: start;
+}
+
+.blockImg {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.photo {
+    width: 100%;
+    height: auto;
+    border-radius: 28px;
+    display: block;
+}
+
+.blockText {
+    grid-column: 2;
+    grid-row: 1;
+    padding-top: 58px;
+}
+
+.blockTitle {
+    margin: 0;
+    color: #43281c;
+    font-family: "Tofino Regular", "Tofino Text", "Tofino", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+}
+
+.p {
+    margin: 34px 0 0;
+    color: #43281c;
+    font-family: "Tofino Regular", "Tofino Text", "Tofino", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+}
+
+.caption {
+    grid-column: 1 / span 2;
+    grid-row: 2;
+    margin: 0;
+    max-width: 1280px;
+    color: #43281c;
+    font-family: "Tofino Regular", "Tofino Text", "Tofino", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.circlesWrap {
+    grid-column: 1 / span 2;
+    grid-row: 3;
+    margin: 18px auto 0;
+    width: 270px;
+}
+
+.circles {
+    width: 100%;
+    height: auto;
+    display: block;
+    opacity: 0.4;
+}
+
+/* Quote */
+.quote {
+    margin: 42px 0 34px;
+    text-align: center;
+    color: #43281c;
+    font-family: "Tofino Regular", "Tofino Text", "Tofino", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+}
+
+/* Carousel */
+.carousel {
+    position: relative;
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+.carouselTrack {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+}
+
+.carouselTrack::-webkit-scrollbar {
+    display: none;
+}
+
+.slide {
+    min-width: 100%;
+    scroll-snap-align: start;
+    margin: 0;
+}
+
+.slideImg {
+    width: 100%;
+    height: 360px;
+    object-fit: cover;
+    display: block;
+}
+
+.arrowLeft,
+.arrowRight {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(0, 0, 0, 0.28);
+    color: #fff;
+    cursor: pointer;
+}
+
+.arrowLeft {
+    left: 14px;
+}
+
+.arrowRight {
+    right: 14px;
+}
+
+.dots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 12px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    border: 0;
+    background: rgba(255, 255, 255, 0.35);
+    cursor: pointer;
+}
+
+.dot[aria-current="true"] {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+/* Block 2 */
+.block2 {
+    margin-top: 72px;
+    display: grid;
+    grid-template-columns: minmax(620px, 1fr) 320px;
+    gap: 56px;
+    align-items: start;
+}
+
+.block2Text {
+    max-width: 980px;
+}
+
+.block2P {
+    margin: 0 0 22px 0;
+    color: #43281c;
+    font-family: "Tofino Regular", "Tofino Text", "Tofino", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.45;
+}
+
+.block2P:last-of-type {
+    margin-bottom: 0;
+}
+
+.block2Art {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 8px;
+}
+
+.art {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    display: block;
+    opacity: 0.95;
+}
+
+.collections {
+    margin-top: 6rem;
+    max-width: 980px;
+}
+
+.collectionsTitle {
+    margin: 0;
+    color: #43281c;
+    font-family: "Tofino Regular", "Tofino Text", "Tofino", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+}
+
+.collectionsText {
+    margin: 34px 0 0;
+    max-width: 900px;
+    color: #43281c;
+    font-family: "Tofino Regular", "Tofino Text", "Tofino", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.45;
+}
+
+.discover {
+    margin: 64px 0 28px;
+    color: #43281c;
+    font-family: "Tofino Regular", "Tofino Text", "Tofino", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+}
+
+.buttons {
+    display: flex;
+    gap: 26px;
+    flex-wrap: wrap;
+}
+
+.btnLight,
+.btnDark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 276px;
+    min-height: 56px;
+    padding: 14px 26px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-family: "Tofino Regular", "Tofino Text", "Tofino", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.btnLight {
+    background: #c47b58;
+    color: #f2e9dc;
+}
+
+.btnDark {
+    background: #43281c;
+    color: #f2e9dc;
+}
+
+.terms {
+    display: inline-block;
+    margin-top: 56px;
+    color: #43281c;
+    text-decoration: none;
+    font-family: "Tofino Regular", "Tofino Text", "Tofino", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+/* Responsive */
+@media (max-width: 980px) {
+    .heroTitle {
+        font-size: 44px;
+    }
+
+    .block {
+        grid-template-columns: 1fr;
+    }
+
+    .block2 {
+        grid-template-columns: 1fr;
+    }
+
+    .slideImg {
+        height: 300px;
+    }
+}
+
+@media (max-width: 640px) {
+
+    .heroInner,
+    .inner {
+        width: calc(100% - 28px);
+    }
+}
+
+@media (max-width: 1180px) {
+    .block {
+        grid-template-columns: 1fr;
+        row-gap: 24px;
+    }
+
+    .blockImg,
+    .blockText,
+    .caption,
+    .circlesWrap {
+        grid-column: auto;
+        grid-row: auto;
+    }
+
+    .blockText {
+        padding-top: 0;
+    }
+
+    .caption {
+        max-width: 100%;
+    }
+
+    .circlesWrap {
+        margin: 8px auto 0;
+    }
+}
+
+@media (max-width: 640px) {
+
+    .blockTitle,
+    .p,
+    .caption,
+    .quote {
+        font-size: 18px;
+    }
+
+    .blockTitle {
+        letter-spacing: 0.14em;
+    }
+
+    .photo {
+        border-radius: 18px;
+    }
+
+    .circlesWrap {
+        width: 180px;
+    }
+}
+
+@media (max-width: 1180px) {
+    .block2 {
+        grid-template-columns: 1fr;
+        gap: 34px;
+    }
+
+    .block2Art {
+        justify-content: flex-start;
+        padding-top: 0;
+    }
+
+    .art {
+        max-width: 240px;
+    }
+
+    .collections {
+        margin-top: 56px;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 980px) {
+    .block2P,
+    .collectionsText {
+        font-size: 16px;
+    }
+
+    .collectionsTitle,
+    .discover {
+        font-size: 16px;
+        letter-spacing: 0.22em;
+    }
+
+    .btnLight,
+    .btnDark {
+        min-width: 230px;
+        min-height: 52px;
+        font-size: 14px;
+    }
+
+    .terms {
+        margin-top: 56px;
+    }
+}
+
+@media (max-width: 640px) {
+    .block2 {
+        margin-top: 52px;
+    }
+
+    .block2P,
+    .collectionsText {
+        font-size: 15px;
+        line-height: 1.5;
+    }
+
+    .collectionsTitle,
+    .discover {
+        font-size: 15px;
+        letter-spacing: 0.16em;
+    }
+
+    .discover {
+        margin-top: 56px;
+    }
+
+    .buttons {
+        gap: 16px;
+    }
+
+    .btnLight,
+    .btnDark {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .art {
+        max-width: 200px;
+    }
+
+    .terms {
+        margin-top: 42px;
+        font-size: 13px;
+    }
+}

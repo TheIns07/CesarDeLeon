@@ -1,0 +1,38 @@
+---
+import styles from "./FooterCesarLogo.module.css";
+import { Image } from "astro:assets";
+
+import CesarLogo from "../assets/images/contacts/CesarLeonTreade.webp";
+---
+
+<footer class={styles.footer} aria-label="Footer César">
+    <div class={styles.inner}>
+        <div class={styles.left}>
+            <h4 class={styles.heading}>
+                ¿Buscas algo único y personalizado a ti?
+            </h4>
+
+            <p class={styles.sub}>Haz tu pedido en Colección César</p>
+
+            <div class={styles.actions}>
+                <a class={styles.btn} href="#trabajos">
+                    Explorar Colección César
+                </a>
+
+                <a class={styles.terms} href="#terminos">
+                    Términos y condiciones
+                </a>
+            </div>
+        </div>
+
+        <div class={styles.right}>
+            <Image
+                src={CesarLogo}
+                alt="César de León"
+                class={styles.logo}
+                loading="lazy"
+                decoding="async"
+            />
+        </div>
+    </div>
+</footer>

@@ -1,10 +1,138 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import HeroCarousel from "../components/HeroCarousel.astro";
+import HeroRondo from "../components/HeroRondo.astro";
 import WorksSection from "../components/WorksSection.astro";
+import FooterRondoPreview from "../components/FooterRondoPreview.astro";
+import FooterCesarLogo from "../components/FooterCesarLogo.astro";
 ---
 
 <Layout>
-  <HeroCarousel />
-  <WorksSection collectionId="pedido" />
+	<div id="hero-cesar" data-hero="cesar">
+		<HeroCarousel />
+	</div>
+
+	<div id="hero-rondo" data-hero="rondo" style="display:none;">
+		<HeroRondo />
+	</div>
+
+	<WorksSection defaultTab="venta" />
+
+	<div data-footer="pedido" style="display:none;">
+		<FooterRondoPreview />
+	</div>
+
+	<div data-footer="venta">
+		<FooterCesarLogo />
+	</div>
+
+	<script is:inline>
+		(() => {
+			const heroCesar = document.getElementById("hero-cesar");
+			const heroRondo = document.getElementById("hero-rondo");
+
+			const footerPedido = document.querySelector(
+				'[data-footer="pedido"]',
+			);
+			const footerVenta = document.querySelector('[data-footer="venta"]');
+
+			const setFooter = (tab) => {
+				if (!footerPedido || !footerVenta) return;
+				footerPedido.style.display =
+					tab === "pedido" ? "block" : "none";
+				footerVenta.style.display = tab === "venta" ? "block" : "none";
+			};
+
+			const setMode = (
+				mode,
+				{ scroll = false, updateHash = true } = {},
+			) => {
+				const isRondo = mode === "rondo";
+				const tab = isRondo ? "pedido" : "venta";
+
+				if (heroCesar)
+					heroCesar.style.display = isRondo ? "none" : "block";
+				if (heroRondo)
+					heroRondo.style.display = isRondo ? "block" : "none";
+
+				window.dispatchEvent(
+					new CustomEvent("works:forceTab", {
+						detail: { tab },
+					}),
+				);
+
+				setFooter(tab);
+
+				if (updateHash) {
+					if (isRondo) {
+						history.replaceState(
+							null,
+							"",
+							`${window.location.pathname}#coleccion-rondo`,
+						);
+					} else {
+						history.replaceState(
+							null,
+							"",
+							window.location.pathname,
+						);
+					}
+				}
+
+				if (scroll) {
+					const target = isRondo ? heroRondo : heroCesar;
+					target?.scrollIntoView({
+						behavior: "smooth",
+						block: "start",
+					});
+				}
+			};
+
+			const applyFromHash = ({ scroll = false } = {}) => {
+				const hash = window.location.hash;
+
+				if (!hash || hash === "#") {
+					setMode("cesar", { scroll: false, updateHash: false });
+					return;
+				}
+
+				if (hash === "#coleccion-rondo") {
+					setMode("rondo", { scroll, updateHash: false });
+					return;
+				}
+
+				setMode("cesar", { scroll, updateHash: false });
+			};
+
+			document.addEventListener("click", (e) => {
+				const a = e.target?.closest?.("a[data-mode]");
+				if (!a) return;
+
+				e.preventDefault();
+
+				const mode = a.getAttribute("data-mode");
+				if (mode === "cesar" || mode === "rondo") {
+					setMode(mode, { scroll: true, updateHash: true });
+				}
+			});
+
+			window.addEventListener("works:tabchange", (e) => {
+				const tab = e.detail?.tab;
+				if (tab === "pedido" || tab === "venta") {
+					setFooter(tab);
+				}
+			});
+
+			window.addEventListener("hashchange", () => {
+				const hash = window.location.hash;
+				if (hash === "#coleccion-rondo") {
+					setMode("rondo", { scroll: false, updateHash: false });
+				} else {
+					setMode("cesar", { scroll: false, updateHash: false });
+				}
+			});
+
+			applyFromHash({ scroll: false });
+		})();
+	</script>
 </Layout>

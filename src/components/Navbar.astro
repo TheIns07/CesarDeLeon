@@ -2,24 +2,91 @@
 import styles from "./Navbar.module.css";
 import MenuLogoUrl from "../assets/logos/Menu.svg?url";
 
+const { pathname } = Astro.url;
+
 const links = [
-  { href: "#coleccion-cesar", label: "Colección César" },
-  { href: "#sobre-mi", label: "Sobre mí" },
-  { href: "#coleccion-rondo", label: "Colección Rondó" },
-  { href: "#contacto", label: "Contacto" },
+    { href: "/", label: "Colección César", mode: "cesar" },
+    { href: "/sobre-mi", label: "Sobre mí" },
+    { href: "/#coleccion-rondo", label: "Colección Rondó", mode: "rondo" },
+    { href: "/contacto", label: "Contacto" },
 ];
+
+const isDarkRoute =
+    pathname === "/contacto" || pathname.startsWith("/producto");
+
+const themeClass = isDarkRoute ? styles.dark : styles.light;
 ---
 
-<header class={styles.navWrap}>
-  <nav class={styles.nav} aria-label="Navegación principal">
-    <a class={styles.brand} href="/" aria-label="Inicio">
-      <img class={styles.brandImg} src={MenuLogoUrl} alt="Logo" />
-    </a>
+<header
+    class:list={[styles.navWrap, themeClass]}
+    data-navbar
+    data-hidden="false"
+>
+    <nav class={styles.nav} aria-label="Navegación principal">
+        <a class={styles.brand} href="/" aria-label="Inicio">
+            <img class={styles.brandImg} src={MenuLogoUrl} alt="Logo" />
+        </a>
 
-    <ul class={styles.navLinks}>
-      {links.map((l) => (
-        <li><a class={styles.navLink} href={l.href}>{l.label}</a></li>
-      ))}
-    </ul>
-  </nav>
+        <ul class={styles.navLinks}>
+            {
+                links.map((l) => (
+                    <li>
+                        <a
+                            class={styles.navLink}
+                            href={l.href}
+                            {...(l.mode ? { "data-mode": l.mode } : {})}
+                        >
+                            {l.label}
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+    </nav>
+
+    <script is:inline>
+        (() => {
+            const nav = document.currentScript?.closest("[data-navbar]");
+            if (!nav) return;
+
+            let lastY = window.scrollY;
+            let ticking = false;
+
+            const TOP_ZONE = 60;
+            const HIDE_AFTER = 140;
+            const DELTA = 8;
+
+            const updateNav = () => {
+                const currentY = window.scrollY;
+                const diff = currentY - lastY;
+
+                if (currentY <= TOP_ZONE) {
+                    nav.setAttribute("data-hidden", "false");
+                    lastY = currentY;
+                    ticking = false;
+                    return;
+                }
+
+                if (currentY > HIDE_AFTER && diff > DELTA) {
+                    nav.setAttribute("data-hidden", "true");
+                } else if (diff < -DELTA) {
+                    nav.setAttribute("data-hidden", "false");
+                }
+
+                lastY = currentY;
+                ticking = false;
+            };
+
+            window.addEventListener(
+                "scroll",
+                () => {
+                    if (!ticking) {
+                        window.requestAnimationFrame(updateNav);
+                        ticking = true;
+                    }
+                },
+                { passive: true },
+            );
+        })();
+    </script>
 </header>

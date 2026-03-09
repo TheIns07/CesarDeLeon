@@ -1,0 +1,123 @@
+---
+import styles from "./ContactSection.module.css";
+import { Image } from "astro:assets";
+
+/**
+ * Reusa aquí assets existentes:
+ * - WorkshopImg: usa una imagen real del taller
+ * - TermsArt: ilustración/ornamento
+ */
+import WorkshopImg from "../assets/images/CesarDeLeon1.webp";
+import TermsArt from "../assets/images/contacts/terms-art.webp";
+
+const whatsappHref = "https://wa.me/521XXXXXXXXXX"; // cambia al número real
+const email = "cesardel@gmail.com";
+const facebookHref = "#"; // pega el link real
+---
+
+<section class={styles.section} id="contacto" aria-label="Contacto">
+    <div class={styles.inner}>
+        <h2 class={styles.title}>
+            ESCRÍBEME Y COMENCEMOS A DAR FORMA A UNA<br />
+            PIEZA PENSADA ESPECIALMENTE PARA TI.
+        </h2>
+
+        <div class={styles.cards} role="list">
+            <a
+                class={styles.card}
+                role="listitem"
+                href={whatsappHref}
+                target="_blank"
+                rel="noreferrer"
+            >
+                <div class={styles.iconWrap} aria-hidden="true">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+                        <path
+                            d="M6.6 10.9c1.4 2.7 3.6 4.8 6.3 6.2l2.1-2.1c.3-.3.8-.4 1.2-.2 1 .3 2 .5 3.1.5.7 0 1.2.5 1.2 1.2V20c0 .7-.5 1.2-1.2 1.2C10.2 21.2 2.8 13.8 2.8 4.8 2.8 4.1 3.3 3.6 4 3.6h3.4c.7 0 1.2.5 1.2 1.2 0 1.1.2 2.1.5 3.1.1.4 0 .9-.3 1.2l-2.2 1.8z"
+                            fill="currentColor"></path>
+                    </svg>
+                </div>
+                <div class={styles.cardLabel}>Whatsapp</div>
+            </a>
+
+            <a class={styles.card} role="listitem" href={`mailto:${email}`}>
+                <div class={styles.iconWrap} aria-hidden="true">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+                        <path
+                            d="M20 6H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 4-8 5-8-5V8l8 5 8-5v2z"
+                            fill="currentColor"></path>
+                    </svg>
+                </div>
+                <div class={styles.cardLabel}>{email}</div>
+            </a>
+
+            <a
+                class={styles.card}
+                role="listitem"
+                href={facebookHref}
+                target="_blank"
+                rel="noreferrer"
+            >
+                <div class={styles.iconWrap} aria-hidden="true">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+                        <path
+                            d="M13.5 22v-8h2.7l.4-3h-3.1V9.2c0-.9.2-1.5 1.5-1.5H16.7V5c-.3 0-1.4-.1-2.7-.1-2.7 0-4.5 1.6-4.5 4.6V11H7v3h2.5v8h4z"
+                            fill="currentColor"></path>
+                    </svg>
+                </div>
+                <div class={styles.cardLabel}>Facebook</div>
+            </a>
+        </div>
+
+        <div class={styles.workshop}>
+            <Image
+                src={WorkshopImg}
+                alt="Taller de César de León"
+                class={styles.workshopImg}
+                loading="lazy"
+                decoding="async"
+            />
+        </div>
+
+        <div class={styles.terms}>
+            <div class={styles.termsArt}>
+                <Image
+                    src={TermsArt}
+                    alt=""
+                    class={styles.termsArtImg}
+                    loading="lazy"
+                    decoding="async"
+                />
+            </div>
+
+            <div class={styles.termsBody}>
+                <h3 class={styles.termsTitle}>TERMINOS Y CONDICIONES</h3>
+
+                <ul class={styles.termsList}>
+                    <li>
+                        Cada pieza se realiza bajo pedido y de manera
+                        personalizada, por lo que no se aceptan cambios ni
+                        devoluciones.
+                    </li>
+                    <li>
+                        Los precios, tiempos y detalles de cada proyecto se
+                        acuerdan directamente con César de León.
+                    </li>
+                    <li>
+                        Cualquier gestión relacionada con encargos, pagos o
+                        consultas se realiza de forma directa vía correo
+                        electrónico o WhatsApp.
+                    </li>
+                    <li>
+                        La coordinación y seguimiento de la logística de envío
+                        es responsabilidad del comprador, salvo acuerdo previo.
+                    </li>
+                    <li>
+                        Al contactar para un encargo, el comprador acepta estos
+                        términos y condiciones.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,101 @@
+.hero {
+    position: relative;
+    height: min(820px, 92vh);
+    min-height: 680px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.media {
+    position: absolute;
+    inset: 0;
+}
+
+.img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.vignette {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(900px 520px at 20% 10%,
+            rgba(0, 0, 0, 0),
+            rgba(0, 0, 0, 0.12)),
+        linear-gradient(to bottom,
+            rgba(0, 0, 0, 0.04),
+            rgba(0, 0, 0, 0.12));
+}
+
+.content {
+    position: relative;
+    z-index: 2;
+    width: min(1280px, calc(100% - 72px));
+    margin: 0 auto;
+    padding-top: 185px;
+    padding-left: 18px;
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.logoWrap {
+    max-width: 460px;
+}
+
+.logo {
+    max-width: 420px;
+}
+
+.subTitle {
+    margin: -6px 0 0 16px;
+    color: #f2e9dc;
+    font-family: "Tofino", "Tofino Text", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.desc {
+    margin: 34px 0 0 18px;
+    max-width: 520px;
+    color: #f2e9dc;
+    font-family: "Tofino", "Tofino Text", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 1.18;
+}
+
+@media (max-width: 640px) {
+    .hero {
+        min-height: 560px;
+    }
+
+    .content {
+        width: calc(100% - 28px);
+        padding-top: 150px;
+        padding-left: 0;
+    }
+
+    .logoWrap {
+        max-width: 360px;
+    }
+
+    .logo {
+        max-width: 330px;
+    }
+
+    .subTitle {
+        margin: 0 0 0 8px;
+        font-size: 26px;
+    }
+
+    .desc {
+        margin: 20px 0 0 8px;
+        font-size: 18px;
+        max-width: 320px;
+    }
+}

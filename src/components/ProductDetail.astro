@@ -1,0 +1,232 @@
+---
+import styles from "./ProductDetail.module.css";
+import { Image } from "astro:assets";
+
+type Spec = { label: string; value: string };
+
+type Props = {
+    title: string;
+    subtitle?: string;
+    price?: string;
+    currency?: string;
+    images: any[];
+    specs?: Spec[];
+    backHref?: string;
+    interestHref?: string;
+};
+
+const {
+    title,
+    subtitle = "",
+    price = "",
+    currency = "MXN",
+    images,
+    specs = [],
+    backHref = "/",
+    interestHref = "/contacto",
+} = Astro.props;
+
+const safeImages = (images && images.length ? images : []).slice(0, 8);
+const firstImage = safeImages[0];
+---
+
+<section class={styles.page} aria-label={`Detalle de ${title}`} data-product>
+    <div class={styles.layout}>
+        <aside class={styles.thumbs} aria-label="Galería de miniaturas">
+            {
+                safeImages.map((img, idx) => (
+                    <button
+                        type="button"
+                        class={styles.thumbBtn}
+                        aria-label={`Ver imagen ${idx + 1}`}
+                        data-thumb
+                        data-index={idx}
+                        data-active={idx === 0 ? "true" : "false"}
+                    >
+                        <Image
+                            src={img}
+                            alt={`${title} - miniatura ${idx + 1}`}
+                            class={styles.thumbImg}
+                            loading={idx === 0 ? "eager" : "lazy"}
+                        />
+                    </button>
+                ))
+            }
+        </aside>
+
+        <div class={styles.media}>
+            <button
+                type="button"
+                class={styles.mainBtn}
+                aria-label="Abrir imagen"
+                data-open
+            >
+                <div class={styles.mainFrame}>
+                    <Image
+                        src={firstImage}
+                        alt={title}
+                        class={styles.mainImg}
+                        loading="eager"
+                        data-main-img
+                    />
+                </div>
+            </button>
+        </div>
+
+        <div class={styles.content}>
+            <div>
+                <h1 class={styles.title}>{title}</h1>
+
+                {subtitle && <p class={styles.subtitle}>{subtitle}</p>}
+
+                {
+                    price && (
+                        <p class={styles.price}>
+                            <span class={styles.priceLabel}>Precio:</span>{" "}
+                            <span class={styles.priceValue}>
+                                $ {price} {currency}
+                            </span>
+                        </p>
+                    )
+                }
+
+                <a class={styles.cta} href={interestHref}>Me interesa</a>
+
+                {
+                    specs.length > 0 && (
+                        <div class={styles.specs}>
+                            <h2 class={styles.specsTitle}>Especificaciones:</h2>
+
+                            <dl class={styles.specsList}>
+                                {specs.map((s) => (
+                                    <>
+                                        <dt class={styles.specKey}>
+                                            {s.label}:
+                                        </dt>
+                                        <dd class={styles.specVal}>
+                                            {s.value}
+                                        </dd>
+                                    </>
+                                ))}
+                            </dl>
+                        </div>
+                    )
+                }
+            </div>
+
+            <div class={styles.backWrap}>
+                <a class={styles.back} href={backHref}>Regresar</a>
+            </div>
+        </div>
+    </div>
+
+    <div class={styles.modal} aria-hidden="true" data-modal>
+        <div class={styles.modalBackdrop} data-close></div>
+
+        <div
+            class={styles.modalCard}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Vista ampliada"
+        >
+            <button
+                class={styles.modalClose}
+                type="button"
+                aria-label="Cerrar"
+                data-close
+            >
+                ✕
+            </button>
+
+            <div class={styles.modalScroller}>
+                <img
+                    class={styles.modalImg}
+                    alt="Vista ampliada"
+                    data-modal-img
+                />
+            </div>
+        </div>
+    </div>
+
+    <script is:inline>
+        (() => {
+            const root = document.querySelector("[data-product]");
+            if (!root) return;
+
+            const thumbButtons = Array.from(
+                root.querySelectorAll("[data-thumb]"),
+            );
+            const mainImg = root.querySelector("[data-main-img]");
+            const openBtn = root.querySelector("[data-open]");
+            const modal = root.querySelector("[data-modal]");
+            const modalImg = root.querySelector("[data-modal-img]");
+            const closeEls = Array.from(root.querySelectorAll("[data-close]"));
+
+            if (!mainImg || !modal || !modalImg) return;
+
+            const getThumbSrc = (btn) =>
+                btn.querySelector("img")?.getAttribute("src");
+
+            const setActive = (btn) => {
+                thumbButtons.forEach((b) =>
+                    b.setAttribute("data-active", b === btn ? "true" : "false"),
+                );
+
+                const src = getThumbSrc(btn);
+                if (!src) return;
+
+                const currentSrc = mainImg.getAttribute("src");
+                if (currentSrc === src) {
+                    modalImg.setAttribute("src", src);
+                    return;
+                }
+
+                mainImg.setAttribute("data-switching", "true");
+
+                window.setTimeout(() => {
+                    mainImg.setAttribute("src", src);
+                    modalImg.setAttribute("src", src);
+
+                    requestAnimationFrame(() => {
+                        mainImg.removeAttribute("data-switching");
+                    });
+                }, 180);
+            };
+
+            if (thumbButtons[0]) {
+                const firstSrc = getThumbSrc(thumbButtons[0]);
+                if (firstSrc) modalImg.setAttribute("src", firstSrc);
+            }
+
+            thumbButtons.forEach((btn) => {
+                btn.addEventListener("click", () => setActive(btn));
+            });
+
+            const open = () => {
+                modal.setAttribute("aria-hidden", "false");
+                modal.setAttribute("data-opened", "true");
+                document.documentElement.style.overflow = "hidden";
+                document.body.style.overflow = "hidden";
+            };
+
+            const close = () => {
+                modal.setAttribute("aria-hidden", "true");
+                modal.removeAttribute("data-opened");
+                document.documentElement.style.overflow = "";
+                document.body.style.overflow = "";
+            };
+
+            openBtn?.addEventListener("click", open);
+            closeEls.forEach((el) => el.addEventListener("click", close));
+
+            window.addEventListener("keydown", (e) => {
+                if (
+                    e.key === "Escape" &&
+                    modal.getAttribute("data-opened") === "true"
+                ) {
+                    close();
+                }
+            });
+        })();
+    </script>
+</section>

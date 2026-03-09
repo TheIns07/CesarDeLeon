@@ -1,0 +1,27 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ProductDetail from "../../components/ProductDetail.astro";
+import { products } from "../../data/products";
+
+export async function getStaticPaths() {
+    return products.map((p: any) => ({
+        params: { slug: p.slug },
+        props: { product: p },
+    }));
+}
+
+const { product } = Astro.props;
+---
+
+<Layout>
+    <ProductDetail
+        title={product.title}
+        subtitle={product.subtitle}
+        price={product.price}
+        currency={product.currency ?? "MXN"}
+        images={product.images}
+        specs={product.specs}
+        backHref="/#trabajos"
+        interestHref={product.interestHref ?? "/#contacto"}
+    />
+</Layout>

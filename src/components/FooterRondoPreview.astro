@@ -1,0 +1,32 @@
+---
+import styles from "./FooterRondoPreview.module.css";
+import { Image } from "astro:assets";
+
+import PreviewImg from "../assets/images/contacts/footer-preview-cesar.png";
+---
+
+<footer class={styles.footer} aria-label="Footer Rondó">
+    <div class={styles.inner}>
+        <div class={styles.left}>
+            <h4 class={styles.heading}>
+                ¿No estas seguro de cual<br />seria tu mejor opcion?
+            </h4>
+
+            <a class={styles.btn} href="#trabajos">
+                Explorar Colección Rondó
+            </a>
+
+            <a class={styles.terms} href="#terminos">Términos y condiciones</a>
+        </div>
+
+        <div class={styles.right}>
+            <Image
+                src={PreviewImg}
+                alt="Vista previa colección Rondó"
+                class={styles.preview}
+                loading="lazy"
+                decoding="async"
+            />
+        </div>
+    </div>
+</footer>
