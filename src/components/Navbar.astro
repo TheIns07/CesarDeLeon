@@ -14,7 +14,9 @@ const links = [
 ];
 
 const isDarkRoute =
-    pathname === "/contacto" || pathname.startsWith("/producto");
+    pathname === "/contacto" ||
+    pathname === "/producto" ||
+    pathname.startsWith("/producto/");
 
 const themeClass = isDarkRoute ? styles.dark : styles.light;
 ---
@@ -32,9 +34,13 @@ const themeClass = isDarkRoute ? styles.dark : styles.light;
         <ul class={styles.navLinks}>
             {
                 links.map((l) => {
+                    const normalizedHref =
+                        l.href.length > 1 ? l.href.replace(/\/+$/, "") : l.href;
+
                     const isActive =
-                        pathname === l.href ||
-                        (l.href !== "/" && pathname.startsWith(l.href));
+                        pathname === normalizedHref ||
+                        (normalizedHref !== "/" &&
+                            pathname.startsWith(`${normalizedHref}/`));
 
                     return (
                         <li>
@@ -50,7 +56,68 @@ const themeClass = isDarkRoute ? styles.dark : styles.light;
                 })
             }
         </ul>
+
+        <button
+            type="button"
+            class={styles.mobileToggle}
+            aria-label="Abrir menú"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+            data-menu-toggle
+        >
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </nav>
+
+    <div class={styles.mobileMenu} id="mobile-menu" data-mobile-menu aria-hidden="true">
+        <div class={styles.mobileBackdrop} data-menu-close></div>
+
+        <div class={styles.mobilePanel}>
+            <div class={styles.mobileHeader}>
+                <a class={styles.brand} href="/" aria-label="Inicio">
+                    <img class={styles.brandImg} src={MenuLogoUrl} alt="Logo" />
+                </a>
+
+                <button
+                    type="button"
+                    class={styles.mobileClose}
+                    aria-label="Cerrar menú"
+                    data-menu-close
+                >
+                    ✕
+                </button>
+            </div>
+
+            <ul class={styles.mobileLinks}>
+                {
+                    links.map((l) => {
+                        const normalizedHref =
+                            l.href.length > 1 ? l.href.replace(/\/+$/, "") : l.href;
+
+                        const isActive =
+                            pathname === normalizedHref ||
+                            (normalizedHref !== "/" &&
+                                pathname.startsWith(`${normalizedHref}/`));
+
+                        return (
+                            <li>
+                                <a
+                                    class={styles.mobileLink}
+                                    href={l.href}
+                                    aria-current={isActive ? "page" : undefined}
+                                    data-menu-link
+                                >
+                                    {l.label}
+                                </a>
+                            </li>
+                        );
+                    })
+                }
+            </ul>
+        </div>
+    </div>
 
     <script is:inline>
         (() => {
@@ -67,6 +134,15 @@ const themeClass = isDarkRoute ? styles.dark : styles.light;
             const updateNav = () => {
                 const currentY = window.scrollY;
                 const diff = currentY - lastY;
+                const menu = nav.querySelector("[data-mobile-menu]");
+                const isMenuOpen = menu?.getAttribute("data-open") === "true";
+
+                if (isMenuOpen) {
+                    nav.setAttribute("data-hidden", "false");
+                    lastY = currentY;
+                    ticking = false;
+                    return;
+                }
 
                 if (currentY <= TOP_ZONE) {
                     nav.setAttribute("data-hidden", "false");
@@ -95,6 +171,50 @@ const themeClass = isDarkRoute ? styles.dark : styles.light;
                 },
                 { passive: true },
             );
+
+            const toggle = nav.querySelector("[data-menu-toggle]");
+            const menu = nav.querySelector("[data-mobile-menu]");
+            const closeButtons = nav.querySelectorAll("[data-menu-close]");
+            const menuLinks = nav.querySelectorAll("[data-menu-link]");
+
+            if (!toggle || !menu) return;
+
+            const openMenu = () => {
+                menu.setAttribute("data-open", "true");
+                menu.setAttribute("aria-hidden", "false");
+                toggle.setAttribute("aria-expanded", "true");
+                document.documentElement.style.overflow = "hidden";
+                document.body.style.overflow = "hidden";
+                nav.setAttribute("data-hidden", "false");
+            };
+
+            const closeMenu = () => {
+                menu.setAttribute("data-open", "false");
+                menu.setAttribute("aria-hidden", "true");
+                toggle.setAttribute("aria-expanded", "false");
+                document.documentElement.style.overflow = "";
+                document.body.style.overflow = "";
+            };
+
+            toggle.addEventListener("click", () => {
+                const isOpen = menu.getAttribute("data-open") === "true";
+                if (isOpen) closeMenu();
+                else openMenu();
+            });
+
+            closeButtons.forEach((btn) => {
+                btn.addEventListener("click", closeMenu);
+            });
+
+            menuLinks.forEach((link) => {
+                link.addEventListener("click", closeMenu);
+            });
+
+            window.addEventListener("keydown", (e) => {
+                if (e.key === "Escape" && menu.getAttribute("data-open") === "true") {
+                    closeMenu();
+                }
+            });
         })();
     </script>
 </header>
