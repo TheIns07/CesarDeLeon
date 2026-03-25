@@ -1,6 +1,6 @@
 import type { ImageMetadata } from "astro";
 
-// Placeholders actuales de César
+// César / bajo pedido
 import pecesCover from "../assets/images/works/1Peces/PECES1.webp";
 import coincidirCover from "../assets/images/works/2ParejaAbraza/COINCIDIR1.webp";
 import venadoCover from "../assets/images/works/3Venado/VENADO1.webp";
@@ -31,10 +31,10 @@ export const worksByCollection: Record<
 > = {
   pedido: {
     heading: "TRABAJOS",
-    subheading: "Esculturas en venta",
+    subheading: "Esculturas bajo pedido",
     items: [
       {
-        title: "Peces",
+        title: "Peces III",
         slug: "peces",
         image: pecesCover,
       },
@@ -53,7 +53,7 @@ export const worksByCollection: Record<
 
   venta: {
     heading: "TRABAJOS",
-    subheading: "Esculturas bajo pedido",
+    subheading: "Esculturas en venta",
     items: [
       {
         title: "Alma Fuerte",
@@ -61,7 +61,7 @@ export const worksByCollection: Record<
         image: almaFuerteCover,
       },
       {
-        title: "Reflexión",
+        title: "Reflección",
         slug: "reflexion",
         image: reflexionCover,
       },
@@ -71,12 +71,12 @@ export const worksByCollection: Record<
         image: eternityCover,
       },
       {
-        title: "Fases",
+        title: "Faces",
         slug: "fases",
         image: fasesCover,
       },
       {
-        title: "Cenit",
+        title: "Cénit",
         slug: "cenit",
         image: cenitCover,
       },
@@ -84,21 +84,6 @@ export const worksByCollection: Record<
         title: "Tauro",
         slug: "tauro",
         image: tauroCover,
-      },
-      {
-        title: "Peces",
-        slug: "peces",
-        image: pecesCover,
-      },
-      {
-        title: "Coincidir",
-        slug: "coincidir",
-        image: coincidirCover,
-      },
-      {
-        title: "Venado",
-        slug: "venado",
-        image: venadoCover,
       },
     ],
   },
